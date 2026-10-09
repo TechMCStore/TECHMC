@@ -1,149 +1,122 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>techMC | Minecraft Server</title>
-<meta name="description" content="Join techMC, your next Minecraft adventure!">
+<title>TECHMC | Minecraft Server</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#080d12;--panel:#111b22;--cyan:#35f2d0;--green:#8cff78;--white:#f4f8fb}
-html{scroll-behavior:smooth}
-body{font-family:Arial,sans-serif;background:var(--bg);color:var(--white)}
-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 8%;background:#0b1219;position:sticky;top:0;z-index:5;border-bottom:1px solid #203039}
-.logo{font-size:27px;font-weight:900;color:var(--cyan)}
-nav a{color:white;text-decoration:none;margin-left:18px;font-size:14px}
-nav a:hover{color:var(--green)}
-.hero{text-align:center;padding:100px 20px 75px;background:radial-gradient(ellipse at top,#123b3b 0%,#101c25 40%,#080d12 75%)}
-.tag{color:var(--green);letter-spacing:4px;font-size:12px;font-weight:bold}
-h1{font-size:clamp(52px,10vw,100px);font-weight:1000;letter-spacing:-4px;margin:15px 0;background:linear-gradient(90deg,#fff,var(--cyan),var(--green));background-clip:text;-webkit-background-clip:text;color:transparent}
-.hero p{color:#b6c7d0;line-height:1.8}
-.buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:28px 0}
-.btn{display:inline-block;padding:14px 23px;border-radius:9px;text-decoration:none;font-weight:bold;border:0;cursor:pointer;font-size:14px}
-.primary{background:var(--cyan);color:#06110f}
-.secondary{background:#1a2a33;color:white;border:1px solid #35515a}
-.status{display:inline-block;margin-top:14px;padding:10px 16px;background:#12241f;border:1px solid #285844;border-radius:30px;color:var(--green);font-size:13px}
-section{padding:65px 8%;scroll-margin-top:70px}
-.heading{text-align:center;font-size:32px;margin-bottom:12px}
-.sub{text-align:center;color:#91a5b0;margin-bottom:32px}
-.ipbox{max-width:620px;margin:auto;background:var(--panel);padding:24px;border:1px solid #28444b;border-radius:16px;text-align:center}
-.ip{font-size:clamp(17px,4vw,25px);font-weight:bold;overflow-wrap:anywhere;margin:12px 0 20px;color:var(--cyan)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:28px}
-.card{background:var(--panel);border:1px solid #20323c;border-radius:14px;padding:25px}
-.card .emoji{font-size:30px}
-.card h3{margin:14px 0 10px}
-.card p,.card li{color:#aebec7;line-height:1.8;font-size:14px}
-.card ul{padding-left:20px}
-.price{font-size:23px;color:var(--green);font-weight:bold;margin:12px 0}
-.center{text-align:center}
-footer{text-align:center;padding:30px 15px;border-top:1px solid #203039;color:#8296a2;font-size:13px;line-height:2}
-@media(max-width:600px){nav{padding:16px 5%;flex-wrap:wrap;gap:12px}nav a{margin-left:10px;font-size:12px}.hero{padding-top:75px}section{padding:50px 5%}h1{letter-spacing:-2px}}
+body{font-family:Arial,sans-serif;background:#080d0a;color:#fff;line-height:1.6}
+header{background:#101a13;padding:16px;position:sticky;top:0;border-bottom:1px solid #24452e}
+nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+nav button{background:#17251b;color:#fff;border:1px solid #315b3b;padding:10px 14px;border-radius:9px;cursor:pointer}
+nav button:hover,nav button.active{background:#66ff8b;color:#07120a}
+.logo{text-align:center;font-size:28px;font-weight:bold;color:#70ff91;margin-bottom:10px}
+.logo span,h1 span{color:#70ff91}
+main{max-width:1000px;margin:auto;padding:30px 18px;min-height:70vh}
+.page{display:none}
+.page.active{display:block}
+.hero{text-align:center;padding:60px 10px}
+h1{font-size:clamp(34px,7vw,60px);line-height:1.15;margin-bottom:16px}
+p{color:#b8c8bc;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:25px}
+.card{background:#111c15;border:1px solid #294532;border-radius:16px;padding:22px;text-align:center}
+.card h2{margin:8px 0}
+.icon{font-size:38px}
+.price{font-size:30px;color:#70ff91;font-weight:bold;margin:8px}
+.btn{display:inline-block;background:#70ff91;color:#07120a;padding:11px 17px;border:0;border-radius:9px;font-weight:bold;cursor:pointer;text-decoration:none;margin-top:12px}
+.notice{border:1px solid #66552b;background:#211b0e;padding:14px;border-radius:10px;margin-top:20px;color:#f4dca2}
+footer{text-align:center;padding:25px;border-top:1px solid #294532;color:#9eb0a2}
 </style>
 </head>
 <body>
 
+<header>
+<div class="logo">⚡ TECH<span>MC</span></div>
 <nav>
-  <div class="logo">⚡ techMC</div>
-  <div>
-    <a href="#home">Home</a>
-    <a href="#rules">Rules</a>
-    <a href="#ranks">Ranks</a>
-    <a href="#community">Discord</a>
-    <a href="#store">Store</a>
-  </div>
+<button class="active" onclick="showPage('home',this)">🏠 Home</button>
+<button onclick="showPage('rules',this)">📜 Rules</button>
+<button onclick="showPage('ranks',this)">👑 Ranks</button>
+<button onclick="showPage('crates',this)">🎁 Crates</button>
+<button onclick="showPage('discord',this)">💬 Discord</button>
 </nav>
-
-<header class="hero" id="home">
-  <div class="tag">YOUR WORLD. YOUR ADVENTURE.</div>
-  <h1>techMC</h1>
-  <p>Enter the world. Build your legacy.<br>
-  Join the adventure and make your mark!</p>
-  <div class="buttons">
-    <a class="btn primary" href="#join">▶ PLAY NOW</a>
-    <a class="btn secondary" href="#community">JOIN DISCORD</a>
-  </div>
-  <div class="status">◆ SERVER ADDRESS READY TO JOIN</div>
 </header>
 
-<section id="join">
-  <h2 class="heading">Join The Server</h2>
-  <p class="sub">Copy the address and connect to techMC.</p>
-  <div class="ipbox">
-    <p style="color:#aebec7">SERVER IP : PORT</p>
-    <div class="ip" id="serverIP">sgp3.bytenut.cc:9500</div>
-    <button class="btn primary" onclick="copyIP()">📋 COPY SERVER IP</button>
-    <p id="copyMessage" style="margin-top:12px;color:var(--green)" aria-live="polite"></p>
-  </div>
+<main>
+<section id="home" class="page active">
+<div class="hero">
+<p>✦ YOUR NEXT ADVENTURE STARTS HERE ✦</p>
+<h1>YOUR WORLD.<br><span>YOUR LEGACY.</span></h1>
+<p>Welcome to TECHMC Minecraft Server!</p>
+<button class="btn" onclick="showPage('rules')">Read Rules</button>
+<button class="btn" onclick="showPage('ranks')">Explore Ranks</button>
+</div>
+<div class="grid">
+<div class="card"><div class="icon">📜</div><h2>Server Rules</h2><p>Play fair and respect everyone.</p><button class="btn" onclick="showPage('rules')">View Rules</button></div>
+<div class="card"><div class="icon">👑</div><h2>Ranks Store</h2><p>Find your favourite rank.</p><button class="btn" onclick="showPage('ranks')">View Ranks</button></div>
+<div class="card"><div class="icon">🎁</div><h2>Crates</h2><p>Explore available crates.</p><button class="btn" onclick="showPage('crates')">View Crates</button></div>
+</div>
 </section>
 
-<section id="rules">
-  <h2 class="heading">📜 Server Rules</h2>
-  <p class="sub">Respect everyone. Keep the server fun.</p>
-  <div class="grid">
-    <div class="card"><div class="emoji">🤝</div><h3>Be Respectful</h3><p>No harassment, bullying or hate speech.</p></div>
-    <div class="card"><div class="emoji">🚫</div><h3>No Cheating</h3><p>No hacks, cheats or unfair exploits.</p></div>
-    <div class="card"><div class="emoji">💬</div><h3>No Spam</h3><p>Don't spam chat or advertise without permission.</p></div>
-    <div class="card"><div class="emoji">🛡️</div><h3>Play Fair</h3><p>Follow staff instructions and the server rules.</p></div>
-  </div>
+<section id="rules" class="page">
+<h1>📜 Server <span>Rules</span></h1>
+<p>Follow these rules to keep TECHMC fair and friendly.</p>
+<div class="grid">
+<div class="card"><h2>🤝 Respect</h2><p>No harassment, bullying or hate speech.</p></div>
+<div class="card"><h2>🛡️ No Cheats</h2><p>No hacked clients or unfair exploits.</p></div>
+<div class="card"><h2>💬 No Spam</h2><p>Don't flood chat or advertise without permission.</p></div>
+<div class="card"><h2>🏠 No Griefing</h2><p>Respect other players' builds and claims.</p></div>
+<div class="card"><h2>👮 Staff</h2><p>Follow staff instructions.</p></div>
+<div class="card"><h2>⚖️ Fair Play</h2><p>Don't abuse bugs or disrupt the server.</p></div>
+</div>
 </section>
 
-<section id="ranks">
-  <h2 class="heading">👑 Ranks</h2>
-  <p class="sub">Explore the ranks available on techMC.</p>
-  <div class="grid">
-    <div class="card"><div class="emoji">🪨</div><h3>Member</h3><p>Start your journey in techMC.</p><div class="price">FREE</div></div>
-    <div class="card"><div class="emoji">⚔️</div><h3>VIP</h3><p>Special rank and perks.</p><div class="price">Coming Soon</div></div>
-    <div class="card"><div class="emoji">👑</div><h3>Premium</h3><p>Discover premium benefits.</p><div class="price">Coming Soon</div></div>
-  </div>
+<section id="ranks" class="page">
+<h1>👑 Ranks <span>Store</span></h1>
+<p>Choose your TECHMC rank.</p>
+<div class="grid">
+<div class="card"><div class="icon">🥉</div><h2>VIP Rank</h2><div class="price">₹5</div></div>
+<div class="card"><div class="icon">💎</div><h2>MVP Rank</h2><div class="price">₹10</div></div>
+<div class="card"><div class="icon">🎥</div><h2>Media Rank</h2><div class="price">₹20</div></div>
+<div class="card"><div class="icon">👑</div><h2>King Rank</h2><div class="price">₹50</div></div>
+<div class="card"><div class="icon">🦸</div><h2>Hero Rank</h2><div class="price">₹99</div></div>
+<div class="card"><div class="icon">🌟</div><h2>Legend Rank</h2><div class="price">₹200</div></div>
+</div>
+<p class="notice">Rank perks and purchase details will be added after confirmation.</p>
 </section>
 
-<section id="community">
-  <h2 class="heading">💬 Community</h2>
-  <p class="sub">Meet players, get announcements and join events.</p>
-  <div class="center">
-    <a class="btn primary" id="discordBtn" href="https://discord.com/" target="_blank" rel="noopener">JOIN DISCORD</a>
-    <p style="color:#91a5b0;margin-top:15px;font-size:13px">Replace the Discord link in the code with your server invite.</p>
-  </div>
+<section id="crates" class="page">
+<h1>🎁 Crate <span>Store</span></h1>
+<p>Choose your favourite crate.</p>
+<div class="grid">
+<div class="card"><div class="icon">📅</div><h2>Monthly Crate</h2><div class="price">₹50</div><p>Monthly crate rewards.</p></div>
+<div class="card"><div class="icon">💎</div><h2>OP Crate</h2><div class="price">₹10</div><p>OP crate rewards.</p></div>
+<div class="card"><div class="icon">⚔️</div><h2>Koth Crate</h2><div class="price">₹25</div><p>Koth crate rewards.</p></div>
+</div>
+<p class="notice">Crate items will be listed after the reward contents are confirmed.</p>
 </section>
 
-<section id="store">
-  <h2 class="heading">🛒 Server Store</h2>
-  <p class="sub">Ranks and server perks — details coming soon.</p>
-  <div class="grid">
-    <div class="card"><div class="emoji">🎁</div><h3>Special Kits</h3><p>Check in-game for available kits.</p></div>
-    <div class="card"><div class="emoji">💎</div><h3>Crate Keys</h3><p>Check in-game for crate rewards.</p></div>
-    <div class="card"><div class="emoji">⭐</div><h3>Rank Upgrades</h3><p>Store link coming soon.</p></div>
-  </div>
+<section id="discord" class="page">
+<div class="hero">
+<div class="icon">💬</div>
+<h1>Join <span>Discord</span></h1>
+<p>Connect with the TECHMC community!</p>
+<a class="btn" href="https://discord.gg/TzfxZbvMbv" target="_blank" rel="noopener">JOIN DISCORD ↗</a>
+</div>
 </section>
+</main>
 
-<footer>
-  <div class="logo">⚡ techMC</div>
-  <p>Built for the community. Powered by adventure.</p>
-  <p>Not an official Minecraft website. Not affiliated with Mojang or Microsoft.</p>
-  <p>© <span id="year"></span> techMC</p>
-</footer>
+<footer>⚡ TECHMC | Minecraft Community</footer>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
-
-async function copyIP(){
-  const ip = document.getElementById("serverIP").textContent.trim();
-  const msg = document.getElementById("copyMessage");
-  try {
-    await navigator.clipboard.writeText(ip);
-    msg.textContent = "✅ Server IP copied!";
-  } catch(e) {
-    const area = document.createElement("textarea");
-    area.value = ip;
-    document.body.appendChild(area);
-    area.select();
-    const ok = document.execCommand("copy");
-    area.remove();
-    msg.textContent = ok ? "✅ Server IP copied!" : "Copy this IP: " + ip;
-  }
+function showPage(id,btn){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(btn)btn.classList.add('active');
+window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
-  </html>
-  
+                                    </html>
+                                                         
