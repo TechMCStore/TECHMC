@@ -1,277 +1,333 @@
 
-</body>       
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TechMC Store</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TechMC | Minecraft Store</title>
+<meta name="theme-color" content="#07111f">
 <style>
+:root{--bg:#050c16;--panel:#0c1a2b;--line:#20354e;--blue:#43a5ff;--cyan:#52e5ff;--text:#edf5ff;--muted:#9eb1c8;--gold:#ffb547}
 *{box-sizing:border-box}
-body{
-  margin:0;font-family:Arial,sans-serif;
-  background:#0b1020;color:white
-}
-header{
-  background:#151d35;padding:18px;
-  display:flex;justify-content:space-between;
-  align-items:center;flex-wrap:wrap;gap:10px
-}
-.logo{font-size:25px;font-weight:bold;color:#38e8b5}
-button{
-  border:0;border-radius:8px;padding:11px 15px;
-  cursor:pointer;font-weight:bold;background:#38e8b5;color:#07131b
-}
-input,select{
-  width:100%;padding:12px;margin:7px 0 14px;
-  border-radius:8px;border:1px solid #364361;
-  background:#111a30;color:white
-}
-main{max-width:1100px;margin:auto;padding:18px}
-.panel,.product{
-  background:#151d35;padding:18px;border-radius:13px;
-  border:1px solid #293653
-}
-.products{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:15px;margin:15px 0 25px
-}
-.product h3{color:#38e8b5}
-.price{font-size:23px;font-weight:bold}
-.small{color:#b9c5dc;font-size:14px}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}
+button,a{ -webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+header{height:66px;position:sticky;top:0;z-index:10;background:#07111ff2;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%;backdrop-filter:blur(15px)}
+.logo{font-size:21px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--cyan)}
+nav{display:flex;align-items:center;gap:20px;font-size:13px;color:var(--muted)}
+nav a:hover{color:var(--cyan)}
+.btn{border:1px solid var(--line);background:#10243a;color:var(--text);padding:12px 16px;border-radius:10px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.primary{background:var(--blue);border-color:var(--blue);color:#03101d}
+.gold{background:var(--gold);color:#251400;border-color:var(--gold)}
+.hero{min-height:530px;padding:70px 6%;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:35px;background:radial-gradient(ellipse at 80% 25%,#163d5b 0,transparent 45%),linear-gradient(135deg,#091321,#06101d 70%)}
+.eyebrow{color:var(--gold);font-weight:800;font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-3px;margin:18px 0}
+h2{font-size:clamp(27px,4vw,40px);letter-spacing:-1.5px;margin:0 0 12px}
+p{color:var(--muted);line-height:1.7;font-size:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+.server{padding:24px;border:1px solid #29425d;border-radius:18px;background:#071321e8;box-shadow:0 20px 70px #0005}
+.online{color:#6ee7b7;font-size:12px;margin-bottom:20px}
+.ip{font-size:22px;overflow-wrap:anywhere;margin:8px 0 15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:1px solid var(--line);padding-top:17px}
+.stat small{display:block;color:var(--muted);font-size:10px;margin-bottom:7px}
+.stat b{font-size:13px}
+section{padding:70px 6%}
+.section-head{margin-bottom:28px}
+.section-head p{margin:6px 0}
+.pills{display:flex;gap:9px;flex-wrap:wrap;margin:24px 0}
+.pill{border:1px solid var(--line);border-radius:30px;padding:10px 16px;background:var(--panel);color:var(--muted);cursor:pointer}
+.pill.active{background:var(--blue);color:#04101d;border-color:var(--blue);font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.product{border:1px solid var(--line);background:linear-gradient(145deg,#10243a,#091421);border-radius:16px;padding:20px;display:flex;flex-direction:column;min-width:0;transition:.2s}
+.product:hover{border-color:#439fef;transform:translateY(-3px)}
+.product-icon{height:95px;display:grid;place-items:center;font-size:48px;background:#07111f;border-radius:12px;margin-bottom:18px}
+.tag{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:1px}
+.product h3{font-size:20px;margin:10px 0}
+.product p{font-size:13px;flex:1}
+.price{font-size:24px;font-weight:900;margin:12px 0 16px}
+.price small{font-size:12px;color:var(--muted);font-weight:400}
+.product .btn{width:100%}
+.info{background:#0b1929;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.info-card{padding:20px;border:1px solid var(--line);border-radius:14px;background:#091522}
+.info-card h3{margin-top:0}
+.discord{background:linear-gradient(110deg,#102f4c,#0b1929);padding:45px 6%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+footer{padding:30px 6%;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.overlay{position:fixed;inset:0;background:#000b;z-index:30;display:none;align-items:center;justify-content:center;padding:15px}
+.overlay.show{display:flex}
+.modal{width:min(100%,440px);max-height:90vh;overflow:auto;border:1px solid #2a4562;background:#0a1727;border-radius:18px;padding:23px}
+.modal h2{font-size:25px}
+.field{display:block;width:100%;padding:13px;margin:9px 0 16px;border:1px solid #29435d;border-radius:9px;background:#06101c;color:white;outline:none}
+.field:focus{border-color:var(--blue)}
+label{font-size:12px;color:var(--muted)}
+.toggle{display:flex;gap:8px;margin:10px 0}
+.toggle button{flex:1}
+.close{float:right;background:transparent;border:0;color:white;font-size:24px;cursor:pointer}
+.cart-row{padding:13px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;font-size:13px}
+.cart-row button{background:none;color:#ff8888;border:0;cursor:pointer}
+.notice{font-size:12px;padding:12px;border-radius:10px;background:#10283a;color:#bceaff;line-height:1.6}
 .hidden{display:none!important}
-h2{margin-top:28px}
-#menu{float:right}
-#qr{width:220px;max-width:100%;display:block;margin:15px auto}
-footer{text-align:center;padding:25px;color:#9eabc5}
+@media(max-width:760px){
+ header{padding:0 4%;height:60px}
+ nav{gap:9px}nav a{display:none}
+ .hero{padding:55px 5%;grid-template-columns:1fr;gap:30px;min-height:auto}
+ h1{font-size:49px}
+ section{padding:50px 5%}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .product{padding:12px}.product-icon{height:75px;font-size:38px}
+ .product h3{font-size:17px}.price{font-size:21px}
+ .product .btn{padding:11px 5px;font-size:12px}
+ .info-grid{grid-template-columns:1fr}
+ .discord{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:370px){.grid{grid-template-columns:1fr}h1{font-size:42px}}
 </style>
 </head>
-
 <body>
+
 <header>
-  <div class="logo">⚡ TechMC STORE</div>
-  <div>
-    <span id="welcome">Welcome, Guest</span>
-    <button onclick="toggleOrders()">My Orders</button>
-    <button onclick="logout()">Logout</button>
-  </div>
+  <a class="logo" href="#home">⚡ TECH<span>MC</span></a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#store">Store</a>
+    <a href="#rules">Rules</a>
+    <a href="https://discord.gg/4W22nxaewD" target="_blank">Discord ↗</a>
+    <button class="btn primary" onclick="openCart()">🛒 Cart <span id="cartCount">0</span></button>
+  </nav>
 </header>
 
 <main>
-<section id="auth" class="panel">
-  <h2>Login / Register</h2>
-  <label>Username</label>
-  <input id="authUser" placeholder="Enter username">
-  <label>Password</label>
-  <input id="authPass" type="password" placeholder="Enter password">
-  <div style="display:flex;gap:10px;flex-wrap:wrap">
-    <button onclick="login()">Login</button>
-    <button onclick="register()">Register</button>
+<section class="hero" id="home">
+  <div>
+    <div class="eyebrow">INDIAN MINECRAFT SERVER</div>
+    <h1>Survival,<br>built for<br>the long run.</h1>
+    <p>Welcome to TechMC. Build your world, make your team and start your adventure. Your next Minecraft journey begins here.</p>
+    <div class="actions">
+      <a href="#join" class="btn primary">🎮 Play now</a>
+      <a href="#store" class="btn">▣ View store</a>
+    </div>
   </div>
-  <p class="small">Demo website: account details are saved in this browser only.</p>
+  <div class="server">
+    <div class="online">● TechMC server information</div>
+    <label>SERVER ADDRESS</label>
+    <div class="ip" id="serverIP">sgp3.bytenut.cc:9500</div>
+    <button class="btn primary" onclick="copyIP()">▣ Copy IP</button>
+    <div class="stats" style="margin-top:20px">
+      <div class="stat"><small>EDITION</small><b>Java</b></div>
+      <div class="stat"><small>PORT</small><b>9500</b></div>
+      <div class="stat"><small>STORE</small><b>Ranks & Shards</b></div>
+      <div class="stat"><small>COMMUNITY</small><b>Discord</b></div>
+    </div>
+  </div>
 </section>
 
-<section id="shop" class="hidden">
-  <h2>🏆 Ranks</h2>
-  <div id="rankProducts" class="products"></div>
-
-  <h2>🔑 Crate Keys</h2>
-  <div id="keyProducts" class="products"></div>
-
-  <h2>💎 Shards</h2>
-  <div id="shardProducts" class="products"></div>
-
-  <section class="panel">
-    <h2>🛒 Your Cart</h2>
-    <div id="cartItems">Cart is empty.</div>
-    <h3 id="cartTotal">Total: $0.00</h3>
-    <button onclick="checkout()">Proceed to Checkout</button>
-    <button onclick="clearCart()" style="background:#ff7b85">Clear Cart</button>
-  </section>
+<section id="join">
+  <div class="section-head">
+    <div class="eyebrow">JOIN TECHMC</div>
+    <h2>Start playing in minutes.</h2>
+    <p>Copy the server address, add the server in Minecraft and connect.</p>
+  </div>
+  <div class="info-grid">
+    <div class="info-card"><h3>01 · Open Minecraft</h3><p>Open Multiplayer in Java Edition or the Servers tab in Bedrock Edition.</p></div>
+    <div class="info-card"><h3>02 · Add TechMC</h3><p>Enter the server address. For Bedrock, enter the port provided by the server host.</p></div>
+    <div class="info-card"><h3>03 · Join the community</h3><p>Need help with an order? Contact the TechMC team on Discord.</p></div>
+  </div>
 </section>
 
-<section id="playerDetails" class="panel hidden">
-  <h2>🎮 Minecraft Details</h2>
-  <p class="small">Purchase se pehle apna Minecraft username aur account type select karo.</p>
-  <label>Minecraft Username (IGN)</label>
-  <input id="ign" maxlength="16" placeholder="Example: Steve123">
-  <label>Account Type</label>
-  <select id="accountType">
-    <option value="">Select account type</option>
-    <option value="Premium">Premium (Official Microsoft account)</option>
-    <option value="Cracked / Offline">Cracked / Offline</option>
-  </select>
-  <button onclick="confirmPlayer()">Confirm Details</button>
-  <button onclick="backToShop()" style="background:#aab7ce">Back</button>
+<section id="store">
+  <div class="section-head">
+    <div class="eyebrow">OFFICIAL TECHMC STORE</div>
+    <h2>Choose your upgrade.</h2>
+    <p>Select a product, enter your Minecraft username and add it to your cart.</p>
+  </div>
+  <div class="pills">
+    <button class="pill active" onclick="showCategory('all',this)">All items</button>
+    <button class="pill" onclick="showCategory('ranks',this)">🏆 Ranks</button>
+    <button class="pill" onclick="showCategory('shards',this)">💎 Shards</button>
+    <button class="pill" onclick="showCategory('crates',this)">🎁 Crates</button>
+  </div>
+  <div class="grid" id="products"></div>
 </section>
 
-<section id="payment" class="panel hidden">
-  <h2>📱 PhonePe Payment</h2>
-  <p>Order total: <strong id="paymentTotal"></strong></p>
-  <p>Minecraft Username: <strong id="paymentIgn"></strong></p>
-  <p>Account Type: <strong id="paymentType"></strong></p>
-  <p class="small">QR scan karke displayed total amount pay karo. Payment complete hone ke baad order submit karo.</p>
-
-  <!-- Apni QR image ko index.html ke saath phonepe-qr.png naam se rakho -->
-  <img id="qr" src="phonepe-qr.png" alt="PhonePe QR Code"
-       onerror="this.style.display='none';document.getElementById('qrError').classList.remove('hidden')">
-  <p id="qrError" class="small hidden">QR image nahi mili. phonepe-qr.png ko index.html ke same folder mein rakho.</p>
-
-  <button onclick="submitOrder()">I Have Paid — Submit Order</button>
-  <button onclick="backToShop()" style="background:#aab7ce">Cancel</button>
-  <p class="small">Note: Ye website payment ko automatically verify nahi karti. Admin ko payment manually check karna hoga.</p>
+<section class="info" id="rules">
+  <div class="section-head">
+    <div class="eyebrow">TECHMC COMMUNITY</div>
+    <h2>Play fair. Treat people well.</h2>
+    <p>Keep the server fun and welcoming for everyone.</p>
+  </div>
+  <div class="info-grid">
+    <div class="info-card"><h3>🤝 Respect players</h3><p>No harassment, hate or threats against other players.</p></div>
+    <div class="info-card"><h3>⚖️ Fair gameplay</h3><p>No cheating, hacks or exploiting bugs. Report issues to staff.</p></div>
+    <div class="info-card"><h3>🛡️ Follow staff instructions</h3><p>Do not spam chat or impersonate staff. Ask for help on Discord.</p></div>
+  </div>
+  <p>Ask TechMC staff for the complete server rules.</p>
 </section>
 
-<section id="orders" class="panel hidden">
-  <h2>📦 My Orders</h2>
-  <div id="orderList">No orders yet.</div>
-</section>
+<div class="discord">
+  <div>
+    <div class="eyebrow">TECHMC DISCORD</div>
+    <h2>Find teammates.<br>Get help. Stay updated.</h2>
+    <p>Questions about your order? Join our Discord community.</p>
+  </div>
+  <a class="btn primary" href="https://discord.gg/4W22nxaewD" target="_blank">💬 Join Discord ↗</a>
+</div>
 </main>
 
-<footer>TechMC Store • Minecraft Digital Items</footer>
+<footer>
+  <div><b style="color:white">⚡ TECHMC</b><p>Build more. Play together.</p></div>
+  <div>© 2026 TechMC · Minecraft is a trademark of Microsoft/Mojang.</div>
+  <a href="#home">Back to top ↑</a>
+</footer>
+
+<!-- Username form -->
+<div class="overlay" id="userOverlay" onclick="outsideClose(event,'userOverlay')">
+  <div class="modal">
+    <button class="close" onclick="closeModal('userOverlay')">×</button>
+    <h2 id="selectedName">Add to cart</h2>
+    <p>Enter the Minecraft username that should receive the item.</p>
+    <label>EDITION</label>
+    <div class="toggle">
+      <button class="btn primary" id="javaBtn" onclick="setEdition('Java')">Java</button>
+      <button class="btn" id="bedrockBtn" onclick="setEdition('Bedrock')">Bedrock</button>
+    </div>
+    <label for="mcName">MINECRAFT USERNAME</label>
+    <input class="field" id="mcName" maxlength="16" placeholder="Enter username" autocomplete="off">
+    <div class="notice" id="nameHint">Java: enter your in-game username.</div>
+    <p id="formError" style="color:#ff8f8f"></p>
+    <button class="btn primary" style="width:100%" onclick="confirmProduct()">Add to cart</button>
+  </div>
+</div>
+
+<!-- Cart -->
+<div class="overlay" id="cartOverlay" onclick="outsideClose(event,'cartOverlay')">
+  <div class="modal">
+    <button class="close" onclick="closeModal('cartOverlay')">×</button>
+    <h2>🛒 Your cart</h2>
+    <div id="cartItems"></div>
+    <div class="price">Total: <span id="cartTotal">₹0</span></div>
+    <p class="notice">Check every item and username before sending your order. Payment and in-game delivery must be confirmed by TechMC staff.</p>
+    <button class="btn primary" style="width:100%;margin-top:12px" onclick="sendOrder()">Continue on Discord ↗</button>
+    <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('cartOverlay')">Continue shopping</button>
+  </div>
+</div>
 
 <script>
+const DISCORD = "https://discord.gg/4W22nxaewD";
 const products = [
-  {name:"VIP Rank",price:1,group:"rank"},
-  {name:"MVP Rank",price:2,group:"rank"},
-  {name:"Legend Rank",price:5,group:"rank"},
-  {name:"Tech Rank",price:7,group:"rank"},
-  {name:"Hero Rank",price:10,group:"rank"},
-  {name:"Koth Key",price:0.50,group:"key"},
-  {name:"OP Key",price:1,group:"key"},
-  {name:"Monthly Key",price:1.50,group:"key"},
-  {name:"1000 Shards",price:10,group:"shard"},
-  {name:"2500 Shards",price:23,group:"shard"},
-  {name:"5000 Shards",price:48,group:"shard"},
-  {name:"7500 Shards",price:70,group:"shard"},
-  {name:"10000 Shards",price:90,group:"shard"}
+ {id:"vip",cat:"ranks",name:"VIP",price:50,icon:"🥉",desc:"VIP rank upgrade for your adventure."},
+ {id:"mvp",cat:"ranks",name:"MVP",price:100,icon:"🥈",desc:"MVP rank upgrade."},
+ {id:"deadliest",cat:"ranks",name:"Deadliest",price:299,icon:"☠️",desc:"Deadliest rank upgrade."},
+ {id:"hero",cat:"ranks",name:"Hero",price:500,icon:"🦸",desc:"Hero rank upgrade."},
+ {id:"hero-plus",cat:"ranks",name:"Hero+",price:1000,icon:"⚡",desc:"Hero+ rank upgrade."},
+ {id:"legend",cat:"ranks",name:"Legend",price:2000,icon:"👑",desc:"Legend rank upgrade."},
+ {id:"shards100",cat:"shards",name:"100 Shards",price:25,icon:"💎",desc:"100 Shards for your account."},
+ {id:"shards1000",cat:"shards",name:"1,000 Shards",price:250,icon:"💠",desc:"1,000 Shards for your account."},
+ {id:"shards10000",cat:"shards",name:"10,000 Shards",price:2450,icon:"🔷",desc:"10,000 Shards for your account."},
+ {id:"shards100000",cat:"shards",name:"100,000 Shards",price:20000,icon:"💎",desc:"100,000 Shards for your account."},
+ {id:"op-crates",cat:"crates",name:"OP Crates",price:199,icon:"🎁",desc:"OP Crates package."},
+ {id:"koth-crates",cat:"crates",name:"Koth Crates",price:99,icon:"🏰",desc:"Koth Crates package."},
+ {id:"monthly-crates",cat:"crates",name:"Monthly Crates",price:599,icon:"🗓️",desc:"Monthly Crates package."}
 ];
 
-let currentUser = localStorage.getItem("techmc_logged") || "";
-let cart = [];
-let pendingOrder = null;
+let cart=[];
+let chosen=null;
+let edition="Java";
 
-function money(n){return "$"+Number(n).toFixed(2)}
-function accounts(){return JSON.parse(localStorage.getItem("techmc_accounts")||"{}")}
-function saveAccounts(a){localStorage.setItem("techmc_accounts",JSON.stringify(a))}
-function orders(){return JSON.parse(localStorage.getItem("techmc_orders")||"[]")}
-function saveOrders(o){localStorage.setItem("techmc_orders",JSON.stringify(o))}
-
-function show(id){
-  ["auth","shop","playerDetails","payment","orders"].forEach(x=>
-    document.getElementById(x).classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
+function rupees(n){return "₹"+n.toLocaleString("en-IN")}
+function renderProducts(category="all"){
+ const root=document.getElementById("products");
+ root.innerHTML="";
+ products.filter(p=>category==="all"||p.cat===category).forEach(p=>{
+  const card=document.createElement("article");
+  card.className="product";
+  const icon=document.createElement("div");icon.className="product-icon";icon.textContent=p.icon;
+  const tag=document.createElement("div");tag.className="tag";tag.textContent=p.cat.toUpperCase();
+  const title=document.createElement("h3");title.textContent=p.name;
+  const desc=document.createElement("p");desc.textContent=p.desc;
+  const price=document.createElement("div");price.className="price";price.textContent=rupees(p.price);
+  const btn=document.createElement("button");btn.className="btn primary";btn.textContent="＋ Add to cart";
+  btn.onclick=()=>openProduct(p.id);
+  card.append(icon,tag,title,desc,price,btn);root.appendChild(card);
+ });
 }
-function updateLogin(){
-  document.getElementById("welcome").textContent=currentUser?
-    "Welcome, "+currentUser:"Welcome, Guest";
-  if(currentUser){show("shop")}else{show("auth")}
+function showCategory(cat,btn){
+ document.querySelectorAll(".pill").forEach(x=>x.classList.remove("active"));
+ btn.classList.add("active");renderProducts(cat);
 }
-function register(){
-  let u=document.getElementById("authUser").value.trim();
-  let p=document.getElementById("authPass").value;
-  if(u.length<3||p.length<4)return alert("Username min 3 aur password min 4 characters rakho.");
-  let a=accounts();
-  if(a[u])return alert("Username already registered.");
-  a[u]=p;saveAccounts(a);
-  alert("Registration successful! Ab login karo.");
+function openProduct(id){
+ chosen=products.find(p=>p.id===id);
+ document.getElementById("selectedName").textContent=chosen.name+" · "+rupees(chosen.price);
+ document.getElementById("mcName").value="";
+ document.getElementById("formError").textContent="";
+ setEdition("Java");
+ document.getElementById("userOverlay").classList.add("show");
 }
-function login(){
-  let u=document.getElementById("authUser").value.trim();
-  let p=document.getElementById("authPass").value;
-  if(accounts()[u]!==p)return alert("Username ya password galat hai.");
-  currentUser=u;localStorage.setItem("techmc_logged",u);
-  updateLogin();
+function setEdition(value){
+ edition=value;
+ document.getElementById("javaBtn").className="btn "+(value==="Java"?"primary":"");
+ document.getElementById("bedrockBtn").className="btn "+(value==="Bedrock"?"primary":"");
+ document.getElementById("mcName").placeholder=value==="Bedrock"?".YourName":"YourName";
+ document.getElementById("nameHint").textContent=value==="Bedrock"
+ ?"Bedrock: enter your gamertag with a leading dot (.) if that is how your server identifies Bedrock players."
+ :"Java: enter your in-game username without a leading dot.";
 }
-function logout(){
-  currentUser="";localStorage.removeItem("techmc_logged");
-  cart=[];updateLogin();
+function confirmProduct(){
+ const input=document.getElementById("mcName");
+ let username=input.value.trim();
+ const err=document.getElementById("formError");
+ if(!username){err.textContent="Please enter your Minecraft username.";return}
+ if(edition==="Bedrock"&&!username.startsWith(".")){
+  err.textContent="For Bedrock, start the username with a dot (.) as requested.";return;
+ }
+ if(edition==="Java"&&username.startsWith(".")){
+  err.textContent="For Java, enter the username without a leading dot.";return;
+ }
+ if(username.length>16||!/^[A-Za-z0-9_.]+$/.test(username)){
+  err.textContent="Please enter a valid username (maximum 16 characters).";return;
+ }
+ cart.push({key:Date.now()+Math.random(),id:chosen.id,name:chosen.name,price:chosen.price,username,edition});
+ closeModal("userOverlay");updateCart();openCart();
 }
-function renderProducts(){
-  for(let group of ["rank","key","shard"]){
-    let target=group==="rank"?"rankProducts":group==="key"?"keyProducts":"shardProducts";
-    document.getElementById(target).innerHTML=products.filter(p=>p.group===group).map(p=>
-      `<div class="product">
-        <h3>${p.name}</h3>
-        <p class="price">${money(p.price)}</p>
-        <button onclick="addCart('${p.name}')">Add to Cart</button>
-      </div>`).join("");
-  }
+function updateCart(){
+ document.getElementById("cartCount").textContent=cart.length;
+ document.getElementById("cartTotal").textContent=rupees(cart.reduce((sum,p)=>sum+p.price,0));
+ const root=document.getElementById("cartItems");root.innerHTML="";
+ if(!cart.length){root.textContent="Your cart is empty.";return}
+ cart.forEach(item=>{
+  const row=document.createElement("div");row.className="cart-row";
+  const info=document.createElement("div");
+  const strong=document.createElement("b");strong.textContent=item.name+" · "+rupees(item.price);
+  const details=document.createElement("div");details.style.color="#9eb1c8";details.style.marginTop="6px";
+  details.textContent=item.edition+" username: "+item.username;
+  info.append(strong,details);
+  const remove=document.createElement("button");remove.textContent="Remove";
+  remove.onclick=()=>{cart=cart.filter(x=>x.key!==item.key);updateCart()};
+  row.append(info,remove);root.appendChild(row);
+ });
 }
-function addCart(name){
-  let item=cart.find(x=>x.name===name);
-  if(item)item.qty++;else cart.push({name,price:products.find(p=>p.name===name).price,qty:1});
-  renderCart();
+function openCart(){updateCart();document.getElementById("cartOverlay").classList.add("show")}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
+function outsideClose(event,id){if(event.target.id===id)closeModal(id)}
+function sendOrder(){
+ if(!cart.length){alert("Your cart is empty!");return}
+ const total=cart.reduce((sum,p)=>sum+p.price,0);
+ const lines=cart.map((p,i)=>`${i+1}. ${p.name} - ${rupees(p.price)} | ${p.edition}: ${p.username}`);
+ const order=`TECHMC STORE ORDER\n\n${lines.join("\n")}\n\nTotal: ${rupees(total)}\nPlease confirm payment method and delivery with TechMC staff.`;
+ try{localStorage.setItem("techmc_last_order",order)}catch(e){}
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(order).then(()=>alert("Order details copied! Paste them in your TechMC Discord ticket.")).catch(()=>{});
+ }
+ window.open(DISCORD,"_blank");
 }
-function changeQty(name,amount){
-  let item=cart.find(x=>x.name===name);
-  if(item)item.qty+=amount;
-  cart=cart.filter(x=>x.qty>0);
-  renderCart();
+function copyIP(){
+ const ip=document.getElementById("serverIP").textContent;
+ if(navigator.clipboard){navigator.clipboard.writeText(ip).then(()=>alert("Server IP copied: "+ip)).catch(()=>prompt("Copy server IP:",ip))}
+ else prompt("Copy server IP:",ip);
 }
-function renderCart(){
-  let el=document.getElementById("cartItems");
-  if(!cart.length){el.textContent="Cart is empty."}
-  else{
-    el.innerHTML=cart.map(i=>
-      `<p>${i.name} — ${money(i.price)} × ${i.qty}
-      <button onclick="changeQty('${i.name}',-1)">−</button>
-      <button onclick="changeQty('${i.name}',1)">+</button></p>`).join("");
-  }
-  document.getElementById("cartTotal").textContent="Total: "+money(cart.reduce((s,i)=>s+i.price*i.qty,0));
-}
-function checkout(){
-  if(!currentUser)return show("auth");
-  if(!cart.length)return alert("Pehle cart mein item add karo.");
-  show("playerDetails");
-}
-function confirmPlayer(){
-  let ign=document.getElementById("ign").value.trim();
-  let type=document.getElementById("accountType").value;
-  if(!/^[A-Za-z0-9_]{3,16}$/.test(ign))
-    return alert("Valid Minecraft username daalo (3–16 letters, numbers, underscore).");
-  if(!type)return alert("Premium ya Cracked / Offline select karo.");
-  pendingOrder={
-    id:"TMC"+Date.now(),
-    user:currentUser,ign:ign,accountType:type,
-    items:cart.map(i=>({...i})),
-    total:cart.reduce((s,i)=>s+i.price*i.qty,0),
-    status:"Pending Verification",
-    date:new Date().toLocaleString()
-  };
-  document.getElementById("paymentTotal").textContent=money(pendingOrder.total);
-  document.getElementById("paymentIgn").textContent=ign;
-  document.getElementById("paymentType").textContent=type;
-  document.getElementById("qr").style.display="block";
-  show("payment");
-}
-function submitOrder(){
-  if(!pendingOrder)return;
-  let list=orders();list.unshift(pendingOrder);saveOrders(list);
-  cart=[];renderCart();pendingOrder=null;
-  alert("Order submitted! Status: Pending Verification. Admin payment check karega.");
-  show("orders");renderOrders();
-}
-function renderOrders(){
-  let list=orders().filter(o=>o.user===currentUser);
-  document.getElementById("orderList").innerHTML=list.length?list.map(o=>
-    `<div class="product" style="margin:12px 0">
-      <h3>${o.id}</h3>
-      <p>Items: ${o.items.map(i=>i.name+" × "+i.qty).join(", ")}</p>
-      <p>Total: <strong>${money(o.total)}</strong></p>
-      <p>Minecraft Username: ${o.ign}</p>
-      <p>Account Type: ${o.accountType}</p>
-      <p>Status: <strong>${o.status}</strong></p>
-      <p class="small">${o.date}</p>
-    </div>`).join(""):"No orders yet.";
-}
-function toggleOrders(){
-  if(!currentUser)return show("auth");
-  renderOrders();show("orders");
-}
-function backToShop(){show("shop")}
-renderProducts();renderCart();updateLogin();
+renderProducts();
+updateCart();
 </script>
 </body>
 </html>
