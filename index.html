@@ -3,184 +3,145 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova AI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aviator Demo Game</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#101114;color:#fff;font-family:Arial,sans-serif}
-header{padding:16px 20px;border-bottom:1px solid #292a30;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:23px;font-weight:bold;color:#b79aff}
-main{max-width:850px;margin:auto;padding:22px 16px 150px}
-h1{text-align:center;margin-top:60px;font-size:32px}
-.sub{text-align:center;color:#aaa;margin-bottom:28px}
-#chat{display:flex;flex-direction:column;gap:16px}
-.msg{padding:14px 16px;border-radius:18px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
-.user{background:#303139;align-self:flex-end;max-width:90%}
-.ai{background:#1b1c22;align-self:stretch}
-.ai pre{background:#090a0d;padding:12px;border-radius:8px;overflow:auto}
-.ai img{max-width:100%;border-radius:10px}
-.composer{position:fixed;bottom:0;left:0;width:100%;padding:12px;background:#101114;border-top:1px solid #292a30}
-.inner{max-width:850px;margin:auto}
-textarea{width:100%;resize:vertical;min-height:60px;max-height:180px;background:#24252b;color:white;border:1px solid #42434c;border-radius:15px;padding:15px;font-size:16px;outline:none}
-.actions{display:flex;gap:8px;align-items:center;margin-top:9px;flex-wrap:wrap}
-button,.upload{border:0;border-radius:10px;padding:11px 14px;background:#a98aff;color:#17121f;font-weight:bold;cursor:pointer}
-.secondary{background:#292a32;color:white}
-#status{color:#aaa;font-size:13px;margin-top:7px}
-#preview{max-width:90px;max-height:70px;display:none;margin-top:6px}
-footer{text-align:center;color:#777;font-size:12px;margin-top:25px}
+body{margin:0;background:#10131a;color:white;font-family:Arial,sans-serif}
+header{padding:18px;background:#1b2029;text-align:center;font-size:25px;font-weight:bold}
+header span{color:#ff4055}
+main{max-width:700px;margin:20px auto;padding:12px}
+.card{background:#1d222d;padding:18px;border-radius:15px;margin-bottom:15px}
+#signup{position:fixed;inset:0;background:#10131a;display:flex;align-items:center;justify-content:center;padding:20px;z-index:5}
+.box{width:100%;max-width:360px;background:#202632;padding:24px;border-radius:16px}
+input{width:100%;padding:13px;margin:8px 0 14px;background:#11151d;color:white;border:1px solid #454c5a;border-radius:9px;font-size:16px}
+button{border:0;padding:13px;border-radius:9px;font-weight:bold;cursor:pointer}
+.full{width:100%;background:#31d17c;color:#082514}
+.cash{width:100%;background:#ffc247;color:#392600;margin-top:9px}
+#game{height:280px;background:radial-gradient(ellipse at bottom,#164632,#111722 70%);border-radius:13px;position:relative;overflow:hidden}
+#mult{position:absolute;top:30%;width:100%;text-align:center;font-size:55px;font-weight:bold}
+#plane{position:absolute;left:10%;bottom:15%;font-size:38px}
+#status{text-align:center;margin-top:12px;color:#d1d6df}
+.balance{font-size:26px;color:#31d17c;font-weight:bold}
+.small{color:#aab3c2;font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">✦ Nova AI</div>
-  <button class="secondary" onclick="clearChat()">New Chat</button>
-</header>
+<header>✈ <span>AVIATOR</span> DEMO</header>
 
-<main>
-  <h1 id="welcome">What can I help with?</h1>
-  <p class="sub">Ask questions · Write code · Explore ideas</p>
-  <div id="chat"></div>
-  <footer>Nova AI · AI responses may make mistakes.</footer>
-</main>
-
-<div class="composer">
-  <div class="inner">
-    <textarea id="prompt" placeholder="Ask anything, write code, Hindi or English..." onkeydown="keySend(event)"></textarea>
-    <img id="preview" alt="Selected image preview">
-    <div class="actions">
-      <label class="upload secondary">📎 Image
-        <input id="image" type="file" accept="image/*" hidden onchange="showImage(event)">
-      </label>
-      <button class="secondary" onclick="askImage()">🎨 Generate image</button>
-      <button onclick="sendMessage()">➤ Send</button>
-    </div>
-    <div id="status">Connect your AI backend to enable real answers and image generation.</div>
-  </div>
+<div id="signup">
+<form class="box" id="form">
+<h2>✈ Welcome!</h2>
+<p class="small">Create a demo account to play with virtual credits.</p>
+<label>Username</label>
+<input id="username" required minlength="2" placeholder="Enter username">
+<label>Password</label>
+<input id="password" type="password" required minlength="4" placeholder="Create password">
+<p>🎁 Signup bonus: <b>$500 virtual credits</b></p>
+<button class="full" type="submit">SIGN UP & PLAY</button>
+</form>
 </div>
 
+<main>
+<div class="card">
+<div class="small">PLAYER: <b id="player">Guest</b></div>
+<p>VIRTUAL BALANCE</p>
+<div class="balance" id="balance">$500.00</div>
+</div>
+
+<div class="card">
+<div id="game">
+<div id="mult">1.00×</div>
+<div id="plane">✈️</div>
+</div>
+<div id="status">Place a demo bet to start!</div>
+</div>
+
+<div class="card">
+<label>Bet amount ($ virtual)</label>
+<input id="bet" type="number" min="1" value="25">
+<button class="full" id="play" onclick="startGame()">▶ PLACE BET</button>
+<button class="cash" id="cash" onclick="cashOut()" disabled>💰 CASH OUT</button>
+<button onclick="resetGame()" style="width:100%;margin-top:10px;background:#343b49;color:white">RESET $500 DEMO</button>
+<p class="small">Entertainment only. No real money, deposits or withdrawals.</p>
+</div>
+</main>
+
 <script>
-const chat = document.getElementById("chat");
-const promptBox = document.getElementById("prompt");
-const statusBox = document.getElementById("status");
-let selectedImage = null;
+let balance=500,playing=false,bet=0,mult=1,start=0,crash=2,frame;
+const el=id=>document.getElementById(id);
 
-// Set this to your deployed backend URL.
-// Example: https://your-worker.your-subdomain.workers.dev
-const API_URL = "";
+el("form").addEventListener("submit",function(e){
+ e.preventDefault();
+ el("player").textContent=el("username").value;
+ el("signup").style.display="none";
+});
 
-function addMessage(text, who) {
-  const div = document.createElement("div");
-  div.className = "msg " + who;
-  div.textContent = text;
-  chat.appendChild(div);
-  div.scrollIntoView({behavior:"smooth", block:"end"});
-  return div;
+function updateBalance(){
+ el("balance").textContent="$"+balance.toFixed(2);
 }
 
-async function sendMessage() {
-  const text = promptBox.value.trim();
-  if (!text && !selectedImage) return;
-
-  document.getElementById("welcome").style.display = "none";
-  addMessage(text || "Please describe this image.", "user");
-  promptBox.value = "";
-
-  const file = selectedImage;
-  selectedImage = null;
-  document.getElementById("image").value = "";
-  document.getElementById("preview").style.display = "none";
-
-  if (!API_URL) {
-    addMessage("Nova AI ka backend abhi connect nahi hai. Real AI answers ke liye API_URL mein apne secure backend ka URL set karo.", "ai");
-    statusBox.textContent = "Backend not connected";
-    return;
-  }
-
-  const loading = addMessage("Thinking...", "ai");
-  statusBox.textContent = "Connecting to AI...";
-
-  try {
-    const form = new FormData();
-    form.append("message", text);
-    if (file) form.append("image", file);
-
-    const response = await fetch(API_URL + "/chat", {
-      method: "POST",
-      body: form
-    });
-
-    if (!response.ok) throw new Error("AI request failed: " + response.status);
-    const data = await response.json();
-    loading.textContent = data.reply || "No answer received.";
-    statusBox.textContent = "Ready";
-  } catch (error) {
-    loading.textContent = "AI request failed. Check your backend URL, server logs and API configuration.";
-    statusBox.textContent = "Connection error";
-  }
+function startGame(){
+ if(playing)return;
+ bet=Number(el("bet").value);
+ if(!Number.isFinite(bet)||bet<1||bet>balance){
+  el("status").textContent="Enter a valid bet within your balance.";
+  return;
+ }
+ balance-=bet;updateBalance();
+ playing=true;mult=1;start=performance.now();
+ crash=1.2+Math.random()*4;
+ el("play").disabled=true;
+ el("cash").disabled=false;
+ el("status").textContent="Plane flying! Cash out in time!";
+ el("plane").style.left="10%";
+ el("plane").style.bottom="15%";
+ frame=requestAnimationFrame(tick);
 }
 
-async function askImage() {
-  const text = promptBox.value.trim();
-  if (!text) {
-    statusBox.textContent = "Pehle image ka description likho.";
-    return;
-  }
-
-  document.getElementById("welcome").style.display = "none";
-  addMessage("🎨 Create image: " + text, "user");
-  promptBox.value = "";
-
-  if (!API_URL) {
-    addMessage("Image generation ke liye image-capable backend/API connect karni hogi.", "ai");
-    return;
-  }
-
-  const loading = addMessage("Creating image...", "ai");
-  try {
-    const response = await fetch(API_URL + "/image", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({prompt:text})
-    });
-    if (!response.ok) throw new Error("Image request failed");
-    const data = await response.json();
-    loading.textContent = "";
-    if (data.imageUrl) {
-      const img = document.createElement("img");
-      img.src = data.imageUrl;
-      img.alt = "AI generated image";
-      loading.appendChild(img);
-    } else {
-      loading.textContent = data.reply || "No image returned.";
-    }
-  } catch {
-    loading.textContent = "Image generation failed. Check the backend and image API.";
-  }
+function tick(now){
+ if(!playing)return;
+ let elapsed=(now-start)/1000;
+ mult=Math.exp(elapsed*.25);
+ if(mult>=crash){
+  mult=crash;
+  el("mult").textContent=mult.toFixed(2)+"×";
+  finish("💥 CRASHED! You lost $"+bet.toFixed(2)+" virtual credits.");
+  return;
+ }
+ el("mult").textContent=mult.toFixed(2)+"×";
+ el("plane").style.left=Math.min(80,10+elapsed*10)+"%";
+ el("plane").style.bottom=Math.min(75,15+elapsed*6)+"%";
+ frame=requestAnimationFrame(tick);
 }
 
-function showImage(event) {
-  selectedImage = event.target.files[0] || null;
-  const preview = document.getElementById("preview");
-  if (selectedImage) {
-    preview.src = URL.createObjectURL(selectedImage);
-    preview.style.display = "block";
-    statusBox.textContent = "Image selected. Add a question and press Send.";
-  }
+function cashOut(){
+ if(!playing)return;
+ let winnings=bet*mult;
+ balance+=winnings;
+ updateBalance();
+ finish("🎉 CASHED OUT! Won $"+winnings.toFixed(2)+" virtual credits.");
 }
 
-function keySend(event) {
-  if (event.key === "Enter" && !event.shiftKey) {
-    event.preventDefault();
-    sendMessage();
-  }
+function finish(message){
+ playing=false;
+ cancelAnimationFrame(frame);
+ el("status").textContent=message;
+ el("play").disabled=false;
+ el("cash").disabled=true;
 }
 
-function clearChat() {
-  chat.replaceChildren();
-  document.getElementById("welcome").style.display = "";
-  statusBox.textContent = "New chat started";
+function resetGame(){
+ playing=false;
+ cancelAnimationFrame(frame);
+ balance=500;updateBalance();
+ el("mult").textContent="1.00×";
+ el("plane").style.left="10%";
+ el("plane").style.bottom="15%";
+ el("status").textContent="Demo reset. Place a bet to start!";
+ el("play").disabled=false;
+ el("cash").disabled=true;
 }
-
 </script>
 </body>
 </html>
