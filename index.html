@@ -3,145 +3,243 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aviator Demo Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neon Arcade | Demo Games</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#10131a;color:white;font-family:Arial,sans-serif}
-header{padding:18px;background:#1b2029;text-align:center;font-size:25px;font-weight:bold}
-header span{color:#ff4055}
-main{max-width:700px;margin:20px auto;padding:12px}
-.card{background:#1d222d;padding:18px;border-radius:15px;margin-bottom:15px}
-#signup{position:fixed;inset:0;background:#10131a;display:flex;align-items:center;justify-content:center;padding:20px;z-index:5}
-.box{width:100%;max-width:360px;background:#202632;padding:24px;border-radius:16px}
-input{width:100%;padding:13px;margin:8px 0 14px;background:#11151d;color:white;border:1px solid #454c5a;border-radius:9px;font-size:16px}
-button{border:0;padding:13px;border-radius:9px;font-weight:bold;cursor:pointer}
-.full{width:100%;background:#31d17c;color:#082514}
-.cash{width:100%;background:#ffc247;color:#392600;margin-top:9px}
-#game{height:280px;background:radial-gradient(ellipse at bottom,#164632,#111722 70%);border-radius:13px;position:relative;overflow:hidden}
-#mult{position:absolute;top:30%;width:100%;text-align:center;font-size:55px;font-weight:bold}
-#plane{position:absolute;left:10%;bottom:15%;font-size:38px}
-#status{text-align:center;margin-top:12px;color:#d1d6df}
-.balance{font-size:26px;color:#31d17c;font-weight:bold}
-.small{color:#aab3c2;font-size:13px;line-height:1.5}
+body{margin:0;background:#080b16;color:#f4f6ff;font-family:Arial,sans-serif}
+header{padding:16px;background:#10182b;border-bottom:1px solid #293653;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{font-size:23px;font-weight:900;color:#22d3ee}
+button{cursor:pointer;border:0;border-radius:9px;padding:11px 14px;font-weight:bold;background:#7955ed;color:white}
+input,select{padding:12px;border-radius:9px;border:1px solid #34415f;background:#0b1222;color:white;width:100%;margin:6px 0 12px}
+main{max-width:1100px;margin:auto;padding:20px}
+.notice{background:#24183c;border:1px solid #7657be;border-radius:10px;padding:13px;font-size:13px;line-height:1.6}
+.hero{padding:25px 0}
+h1{font-size:clamp(32px,7vw,54px);margin-bottom:10px}
+h1 span{color:#22d3ee}
+.muted{color:#a2acc5;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.stat,.game,.panel{background:#111a2d;border:1px solid #293653;border-radius:13px;padding:15px}
+.stat strong{display:block;font-size:22px;margin-top:8px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap}
+.toolbar input{flex:1;min-width:160px}
+.filters{display:flex;gap:7px;overflow:auto;margin:12px 0}
+.filters button{white-space:nowrap;background:#1c2842}
+.filters button.active{background:#7955ed}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.game .emoji{font-size:32px}
+.game h3{font-size:15px;min-height:35px}
+.game p{font-size:12px;color:#a2acc5;min-height:30px;line-height:1.5}
+.game button{width:100%}
+.overlay{position:fixed;inset:0;background:#02040ddd;display:flex;align-items:center;justify-content:center;padding:15px;z-index:5;overflow:auto}
+.modal{width:100%;max-width:430px;max-height:95vh;overflow:auto;background:#111a2d;border:1px solid #39486a;border-radius:18px;padding:22px}
+.modal h2{margin-top:0}
+.hidden{display:none!important}
+.tabs{display:flex;gap:8px;margin:15px 0}
+.tabs button{flex:1}
+.result{padding:17px;border-radius:10px;background:#091020;margin:15px 0;line-height:1.8}
+footer{text-align:center;color:#a2acc5;padding:25px;font-size:12px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:1fr}.game{padding:11px}}
 </style>
 </head>
 <body>
-<header>✈ <span>AVIATOR</span> DEMO</header>
 
-<div id="signup">
-<form class="box" id="form">
-<h2>✈ Welcome!</h2>
-<p class="small">Create a demo account to play with virtual credits.</p>
-<label>Username</label>
-<input id="username" required minlength="2" placeholder="Enter username">
-<label>Password</label>
-<input id="password" type="password" required minlength="4" placeholder="Create password">
-<p>🎁 Signup bonus: <b>$500 virtual credits</b></p>
-<button class="full" type="submit">SIGN UP & PLAY</button>
-</form>
-</div>
+<header>
+ <div class="logo">NEON ARCADE ✦</div>
+ <div id="wallet">🪙 Demo: $0</div>
+ <button id="accountBtn" onclick="openAuth()">Login / Register</button>
+ <button id="logoutBtn" class="hidden" onclick="logout()">Logout</button>
+</header>
 
 <main>
-<div class="card">
-<div class="small">PLAYER: <b id="player">Guest</b></div>
-<p>VIRTUAL BALANCE</p>
-<div class="balance" id="balance">$500.00</div>
-</div>
+ <div class="notice">🎮 DEMO ONLY — No real money, deposits, withdrawals or cash prizes. All balances and results are virtual.</div>
+ <section class="hero">
+  <h1>PLAY YOUR<br><span>ARCADE WORLD</span></h1>
+  <p class="muted">50 mini-games. One arcade. Create a demo account and enjoy the games on your phone.</p>
+  <button onclick="openAuth()">Get Started →</button>
+ </section>
 
-<div class="card">
-<div id="game">
-<div id="mult">1.00×</div>
-<div id="plane">✈️</div>
-</div>
-<div id="status">Place a demo bet to start!</div>
-</div>
+ <div class="stats">
+  <div class="stat"><span class="muted">Games</span><strong>50 🎮</strong></div>
+  <div class="stat"><span class="muted">New account bonus</span><strong>$500 Demo</strong></div>
+  <div class="stat"><span class="muted">Cash value</span><strong>$0</strong></div>
+ </div>
 
-<div class="card">
-<label>Bet amount ($ virtual)</label>
-<input id="bet" type="number" min="1" value="25">
-<button class="full" id="play" onclick="startGame()">▶ PLACE BET</button>
-<button class="cash" id="cash" onclick="cashOut()" disabled>💰 CASH OUT</button>
-<button onclick="resetGame()" style="width:100%;margin-top:10px;background:#343b49;color:white">RESET $500 DEMO</button>
-<p class="small">Entertainment only. No real money, deposits or withdrawals.</p>
-</div>
+ <h2>Explore Games</h2>
+ <div class="toolbar">
+  <input id="search" placeholder="🔎 Search games..." oninput="render()">
+  <select id="sort" onchange="render()" style="width:auto">
+   <option value="default">Default order</option>
+   <option value="az">Name A–Z</option>
+  </select>
+ </div>
+ <div class="filters" id="filters"></div>
+ <div class="grid" id="games"></div>
 </main>
 
+<footer>NEON ARCADE · Entertainment demo · Virtual coins have no cash value.</footer>
+
+<div class="overlay" id="auth">
+ <div class="modal">
+  <div class="logo">NEON ARCADE</div>
+  <h2 id="authTitle">Create Account</h2>
+  <p class="muted">New demo accounts start with $500 virtual coins.</p>
+  <div class="tabs">
+   <button onclick="setMode('register')">Register</button>
+   <button onclick="setMode('login')">Login</button>
+  </div>
+  <form id="authForm">
+   <label>Username</label>
+   <input id="username" minlength="3" maxlength="24" required autocomplete="username" placeholder="Enter username">
+   <label>Password</label>
+   <input id="password" type="password" minlength="6" required autocomplete="current-password" placeholder="Demo password (6+ characters)">
+   <p id="error" style="color:#fca5a5"></p>
+   <button id="submitBtn" style="width:100%">Register & Get $500</button>
+  </form>
+  <p class="muted">Use a made-up password. This local demo is not secure enough for real credentials.</p>
+  <button style="background:#293653" onclick="document.getElementById('auth').classList.add('hidden')">Close</button>
+ </div>
+</div>
+
+<div class="overlay hidden" id="play">
+ <div class="modal">
+  <button onclick="closeGame()" style="float:right;background:#293653">✕</button>
+  <div id="playEmoji" style="font-size:60px;text-align:center">🎮</div>
+  <h2 id="playTitle" style="text-align:center">Game</h2>
+  <p id="playDesc" class="muted"></p>
+  <label>Virtual coins per round (1–50)</label>
+  <input type="number" id="stake" value="10" min="1" max="50" step="1">
+  <div class="result" id="result">Ready to play?</div>
+  <button onclick="playRound()" style="width:100%">Play Demo Round</button>
+  <p class="muted">Virtual points only. No real-money rewards.</p>
+ </div>
+</div>
+
 <script>
-let balance=500,playing=false,bet=0,mult=1,start=0,crash=2,frame;
-const el=id=>document.getElementById(id);
+const KEY="neon_arcade_accounts_demo_v1";
+const gamesData=[
+["Aviator Flight","✈️","Flight"],["Lucky Wheel","🎡","Wheel"],
+["Dice Roll","🎲","Dice"],["Hi-Lo Cards","🃏","Cards"],
+["Coin Flip","🪙","Classic"],["Color Pick","🌈","Color"],
+["Number Guess","🔢","Numbers"],["Lucky Stars","⭐","Wheel"],
+["Fruit Match","🍒","Slots"],["Gem Spin","💎","Slots"],
+["Treasure Chest","🧰","Classic"],["Rocket Dash","🚀","Flight"],
+["Moon Mission","🌙","Flight"],["Meteor Run","☄️","Flight"],
+["Card Draw","🂡","Cards"],["Blackjack Lite","♠️","Cards"],
+["Red or Black","🔴","Color"],["Odd or Even","➗","Numbers"],
+["High Number","📈","Numbers"],["Low Number","📉","Numbers"],
+["Dice Duel","🎲","Dice"],["Double Dice","🎲","Dice"],
+["Triple Dice","🎲","Dice"],["Lucky Seven","7️⃣","Numbers"],
+["Magic Eight","🎱","Classic"],["Crystal Ball","🔮","Classic"],
+["Golden Key","🗝️","Classic"],["Mystery Box","🎁","Classic"],
+["Treasure Hunt","🗺️","Classic"],["Pirate Gold","🏴‍☠️","Classic"],
+["Candy Pop","🍬","Slots"],["Lemon Spin","🍋","Slots"],
+["Cherry Spin","🍒","Slots"],["Diamond Drop","💠","Slots"],
+["Rainbow Reel","🌈","Slots"],["Ocean Spin","🌊","Slots"],
+["Fire Spin","🔥","Slots"],["Ice Spin","🧊","Slots"],
+["Jungle Quest","🌴","Classic"],["Dragon Den","🐉","Classic"],
+["Phoenix Rise","🦅","Flight"],["Turbo Race","🏎️","Racing"],
+["Drift Challenge","🏁","Racing"],["Bike Sprint","🏍️","Racing"],
+["Space Race","🛸","Racing"],["Rocket Car","🚗","Racing"],
+["Goal Challenge","⚽","Sports"],["Basket Shot","🏀","Sports"],
+["Target Hit","🎯","Sports"],["Memory Match","🧠","Puzzle"]
+];
+let mode="register",user=null,chosen=-1,cat="All";
 
-el("form").addEventListener("submit",function(e){
+function accounts(){
+ try{return JSON.parse(localStorage.getItem(KEY)||"{}")}
+ catch(e){return {}}
+}
+function save(a){localStorage.setItem(KEY,JSON.stringify(a))}
+function keyName(s){return s.trim().toLowerCase()}
+function setMode(m){
+ mode=m;
+ document.getElementById("authTitle").textContent=m==="register"?"Create Account":"Login";
+ document.getElementById("submitBtn").textContent=m==="register"?"Register & Get $500":"Login";
+ document.getElementById("error").textContent="";
+}
+function openAuth(){document.getElementById("auth").classList.remove("hidden")}
+function updateWallet(){
+ document.getElementById("wallet").textContent="🪙 Demo: $"+(user?user.balance:0).toFixed(2);
+ document.getElementById("accountBtn").textContent=user?user.username:"Login / Register";
+ document.getElementById("logoutBtn").classList.toggle("hidden",!user);
+}
+document.getElementById("authForm").addEventListener("submit",e=>{
  e.preventDefault();
- el("player").textContent=el("username").value;
- el("signup").style.display="none";
+ let name=document.getElementById("username").value.trim();
+ let pass=document.getElementById("password").value;
+ let msg=document.getElementById("error");
+ if(name.length<3||pass.length<6){msg.textContent="Username needs 3 characters; password needs 6.";return}
+ let a=accounts(),k=keyName(name);
+ if(mode==="register"){
+  if(a[k]){msg.textContent="Account exists. Select Login.";return}
+  // Demo only: never store real passwords like this in a production site.
+  a[k]={username:name,password:pass,balance:500,bonusClaimed:true};
+  save(a);
+ }else{
+  if(!a[k]||a[k].password!==pass){msg.textContent="Wrong username or password.";return}
+ }
+ user={username:a[k].username,balance:Number(a[k].balance)||0};
+ sessionStorage.setItem("neon_demo_user",k);
+ document.getElementById("auth").classList.add("hidden");
+ updateWallet();render();
 });
-
-function updateBalance(){
- el("balance").textContent="$"+balance.toFixed(2);
+function logout(){
+ user=null;sessionStorage.removeItem("neon_demo_user");
+ updateWallet();openAuth();
 }
-
-function startGame(){
- if(playing)return;
- bet=Number(el("bet").value);
- if(!Number.isFinite(bet)||bet<1||bet>balance){
-  el("status").textContent="Enter a valid bet within your balance.";
-  return;
+function restore(){
+ let k=sessionStorage.getItem("neon_demo_user"),a=accounts();
+ if(k&&a[k])user={username:a[k].username,balance:Number(a[k].balance)||0};
+ updateWallet();
+}
+function persist(){
+ if(!user)return;
+ let a=accounts(),k=keyName(user.username);
+ if(a[k]){a[k].balance=user.balance;save(a)}
+ updateWallet();
+}
+function render(){
+ let all=["All",...new Set(gamesData.map(g=>g[2]))];
+ document.getElementById("filters").innerHTML=all.map(c=>
+ `<button class="${cat===c?"active":""}" onclick="setCat('${c}')">${c}</button>`).join("");
+ let q=document.getElementById("search").value.toLowerCase();
+ let list=gamesData.map((g,i)=>({g,i})).filter(x=>
+ (cat==="All"||x.g[2]===cat)&&x.g[0].toLowerCase().includes(q));
+ if(document.getElementById("sort").value==="az")list.sort((a,b)=>a.g[0].localeCompare(b.g[0]));
+ document.getElementById("games").innerHTML=list.map(x=>
+ `<div class="game"><div class="emoji">${x.g[1]}</div><h3>${x.i+1}. ${x.g[0]}</h3><p>${x.g[2]} · Virtual demo game</p><button onclick="openGame(${x.i})">Play Demo</button></div>`
+ ).join("")||"<p>No games found.</p>";
+}
+function setCat(c){cat=c;render()}
+function openGame(i){
+ if(!user){openAuth();return}
+ chosen=i;
+ document.getElementById("playEmoji").textContent=gamesData[i][1];
+ document.getElementById("playTitle").textContent=gamesData[i][0];
+ document.getElementById("playDesc").textContent="Enjoy "+gamesData[i][0]+" for entertainment using virtual demo coins.";
+ document.getElementById("result").textContent="Ready for a demo round?";
+ document.getElementById("play").classList.remove("hidden");
+}
+function closeGame(){document.getElementById("play").classList.add("hidden")}
+function playRound(){
+ let stake=Number(document.getElementById("stake").value);
+ let result=document.getElementById("result");
+ if(!Number.isInteger(stake)||stake<1||stake>50){result.textContent="Enter a whole number from 1 to 50.";return}
+ if(stake>user.balance){result.textContent="Not enough demo coins.";return}
+ user.balance-=stake;
+ // Simple random arcade scoring. These are not cash prizes.
+ if(Math.random()<0.4){
+  let reward=stake*2;user.balance+=reward;
+  result.textContent="🎉 Demo win! Virtual points awarded: $"+reward.toFixed(2);
+ }else{
+  result.textContent="🎮 Round complete! Virtual coins used: $"+stake.toFixed(2);
  }
- balance-=bet;updateBalance();
- playing=true;mult=1;start=performance.now();
- crash=1.2+Math.random()*4;
- el("play").disabled=true;
- el("cash").disabled=false;
- el("status").textContent="Plane flying! Cash out in time!";
- el("plane").style.left="10%";
- el("plane").style.bottom="15%";
- frame=requestAnimationFrame(tick);
+ persist();
 }
-
-function tick(now){
- if(!playing)return;
- let elapsed=(now-start)/1000;
- mult=Math.exp(elapsed*.25);
- if(mult>=crash){
-  mult=crash;
-  el("mult").textContent=mult.toFixed(2)+"×";
-  finish("💥 CRASHED! You lost $"+bet.toFixed(2)+" virtual credits.");
-  return;
- }
- el("mult").textContent=mult.toFixed(2)+"×";
- el("plane").style.left=Math.min(80,10+elapsed*10)+"%";
- el("plane").style.bottom=Math.min(75,15+elapsed*6)+"%";
- frame=requestAnimationFrame(tick);
-}
-
-function cashOut(){
- if(!playing)return;
- let winnings=bet*mult;
- balance+=winnings;
- updateBalance();
- finish("🎉 CASHED OUT! Won $"+winnings.toFixed(2)+" virtual credits.");
-}
-
-function finish(message){
- playing=false;
- cancelAnimationFrame(frame);
- el("status").textContent=message;
- el("play").disabled=false;
- el("cash").disabled=true;
-}
-
-function resetGame(){
- playing=false;
- cancelAnimationFrame(frame);
- balance=500;updateBalance();
- el("mult").textContent="1.00×";
- el("plane").style.left="10%";
- el("plane").style.bottom="15%";
- el("status").textContent="Demo reset. Place a bet to start!";
- el("play").disabled=false;
- el("cash").disabled=true;
-}
+restore();
+render();
 </script>
 </body>
 </html>
