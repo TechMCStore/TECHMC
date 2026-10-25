@@ -1,145 +1,125 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#10091d">
-<meta name="description" content="GameVault — discover PC, console, mobile and browser games in one premium gaming library.">
-<title>GameVault — All Games Hub</title>
+<title>GameVault | Play Games</title>
 <style>
-:root{--bg:#090710;--panel:#141020;--panel2:#1c152c;--line:#332448;--purple:#a855f7;--pink:#ec4899;--text:#f7f3ff;--muted:#b8accb;--good:#86efac}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#352052 0,transparent 48%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}button,input,select{font:inherit}button,a{ -webkit-tap-highlight-color:transparent}a{color:inherit;text-decoration:none}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}
-header{position:sticky;top:0;z-index:20;background:#0b0814eF;backdrop-filter:blur(16px);border-bottom:1px solid #2a2039}.nav{min-height:70px;display:flex;align-items:center;gap:16px;justify-content:space-between}.brand{font-size:22px;font-weight:900;letter-spacing:-.7px;white-space:nowrap}.brand span{color:#c084fc}.brandMark{display:inline-grid;place-items:center;background:linear-gradient(135deg,#9333ea,#ec4899);border-radius:10px;width:34px;height:34px;margin-right:8px}.navlinks{display:flex;gap:18px;color:var(--muted);font-size:14px}.navlinks a:hover{color:white}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:11px;cursor:pointer;font-weight:700;transition:.18s}.btn:hover{border-color:#bd8cff;transform:translateY(-1px)}.btn.primary{background:linear-gradient(135deg,#9333ea,#c026d3);border:0}.btn:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #d8b4fe;outline-offset:3px}
-.hero{padding:54px 0 30px;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}.eyebrow{color:#d8b4fe;font-size:12px;letter-spacing:2px;font-weight:800;text-transform:uppercase}.hero h1{font-size:clamp(36px,6vw,66px);line-height:1.02;letter-spacing:-2px;margin:13px 0}.hero h1 span{background:linear-gradient(90deg,#c084fc,#f0abfc,#f9a8d4);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:600px;color:var(--muted);line-height:1.7}.heroActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.heroArt{min-height:245px;border:1px solid #49305f;border-radius:24px;background:linear-gradient(140deg,#29163e,#171026 55%,#301334);display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden}.heroArt:before,.heroArt:after{content:"";position:absolute;border:1px solid #b76bff44;border-radius:50%;width:230px;height:230px}.heroArt:after{width:310px;height:310px}.orb{font-size:80px;filter:drop-shadow(0 0 28px #b34cff99);z-index:1}.heroArt strong{font-size:24px;z-index:1;margin-top:8px}.heroArt small{color:#cdb8e4;z-index:1;margin-top:5px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0 34px}.stat{background:#130f1e;border:1px solid var(--line);border-radius:14px;padding:15px}.stat strong{display:block;font-size:22px}.stat span{font-size:12px;color:var(--muted)}
-.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:24px 0 16px}.sectionHead h2{margin:0;font-size:25px;letter-spacing:-.5px}.sectionHead p{margin:5px 0 0;color:var(--muted);font-size:13px}
-.toolbar{background:#110d1a;border:1px solid var(--line);padding:13px;border-radius:16px;display:grid;grid-template-columns:minmax(180px,1fr) 190px 145px;gap:10px;margin-bottom:15px}.field{width:100%;background:#090710;color:var(--text);border:1px solid #3a2b4e;border-radius:10px;padding:12px;min-width:0}.field::placeholder{color:#9284a5}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:3px 1px 13px;scrollbar-width:thin}.chip{white-space:nowrap;border:1px solid var(--line);border-radius:999px;background:#120e1c;color:var(--muted);padding:8px 13px;cursor:pointer;font-size:13px}.chip.active{background:#8b35c6;color:white;border-color:#c084fc}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.game{border:1px solid var(--line);background:linear-gradient(160deg,#191227,#100d18);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:transform .18s,border-color .18s}.game:hover{transform:translateY(-3px);border-color:#8b5bb3}.cover{height:112px;display:grid;place-items:center;font-size:45px;position:relative;background:var(--cover,linear-gradient(135deg,#3b1c58,#20112e))}.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#100d18aa,transparent 80%)}.platform{position:absolute;z-index:1;bottom:8px;left:9px;font-size:10px;font-weight:800;letter-spacing:.5px;border:1px solid #ffffff30;background:#100a1bcc;padding:4px 7px;border-radius:6px}.gameBody{padding:13px;display:flex;flex-direction:column;gap:8px;flex:1}.game h3{font-size:15px;margin:0;line-height:1.35}.game p{font-size:12px;color:var(--muted);margin:0;line-height:1.5;flex:1}.tags{display:flex;gap:5px;flex-wrap:wrap}.tag{font-size:10px;color:#d9c4f4;background:#2a1c3b;padding:4px 6px;border-radius:5px}.game .btn{width:100%;padding:9px;font-size:12px;margin-top:3px}.empty{grid-column:1/-1;text-align:center;padding:40px 15px;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}
-.notice{border:1px solid #49305f;background:#170f24;color:#d8c6ed;padding:14px;border-radius:12px;line-height:1.6;font-size:13px;margin:20px 0}.notice strong{color:white}
-footer{margin-top:50px;border-top:1px solid var(--line);padding:25px 0 35px;color:var(--muted);font-size:12px}.footerInner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.footerLinks{display:flex;gap:14px}
-dialog{background:#130e1e;color:var(--text);border:1px solid #654386;border-radius:18px;width:min(520px,calc(100% - 26px));padding:0;box-shadow:0 25px 100px #000b}dialog::backdrop{background:#05030acc;backdrop-filter:blur(4px)}.modalHead{display:flex;justify-content:space-between;align-items:center;padding:17px;border-bottom:1px solid var(--line)}.modalHead h2{font-size:18px;margin:0}.modalContent{padding:18px}.modalContent p{color:var(--muted);line-height:1.65;font-size:14px}.modalContent .btn{display:inline-block;text-align:center;margin:5px 5px 0 0}.close{width:34px;height:34px;padding:0}.authTabs{display:flex;gap:8px;margin-bottom:15px}.authTabs button{flex:1}.authForm{display:grid;gap:10px}.authForm label{font-size:12px;color:var(--muted)}.authForm input{display:block;margin-top:6px}.status{min-height:18px;font-size:13px;color:#fcd34d;line-height:1.5}.hidden{display:none!important}
-@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.navlinks{display:none}.hero{grid-template-columns:1fr .7fr}.toolbar{grid-template-columns:1fr 1fr}.toolbar input{grid-column:1/-1}}
-@media(max-width:600px){.wrap{width:calc(100% - 22px)}.nav{min-height:62px}.brand{font-size:19px}.nav .btn{padding:9px 10px;font-size:12px}.hero{padding-top:35px;grid-template-columns:1fr}.heroArt{min-height:160px}.orb{font-size:55px}.heroArt strong{font-size:20px}.stats{gap:8px}.stat{padding:11px}.stat strong{font-size:18px}.stat span{font-size:10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cover{height:94px;font-size:37px}.gameBody{padding:10px}.game h3{font-size:13px}.game p{font-size:11px}.sectionHead h2{font-size:21px}.toolbar{grid-template-columns:1fr 1fr;padding:9px}.toolbar select{font-size:12px;padding:10px}.chip{padding:7px 11px}.hero h1{letter-spacing:-1.5px}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+*{box-sizing:border-box}
+body{margin:0;background:#080817;color:white;font-family:Arial,sans-serif}
+header{padding:18px;background:#11102a;border-bottom:2px solid #922cff;text-align:center}
+h1{margin:0;color:#c56aff}
+header p{color:#bbb;font-size:13px}
+main{max-width:1000px;margin:auto;padding:15px}
+.hero{padding:25px 15px;border-radius:15px;background:linear-gradient(135deg,#32105e,#11132e);text-align:center}
+button{background:#8125ed;color:white;border:0;border-radius:9px;padding:12px;cursor:pointer;font-weight:bold}
+button:active{transform:scale(.97)}
+.ad{margin:15px 0;padding:16px;text-align:center;border:1px dashed #7f4ba5;border-radius:10px;color:#c6b0dc;font-size:12px}
+.games{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:#13132b;border:1px solid #34305a;border-radius:12px;padding:15px;text-align:center}
+.emoji{font-size:45px}
+.card h3{margin:8px 0}
+#play{display:none;margin-top:20px;padding:15px;background:#12122b;border:1px solid #9d45ff;border-radius:13px;text-align:center}
+#play button{margin:4px}
+#result{color:#d4a2ff;font-weight:bold}
+input{padding:12px;border-radius:8px;border:1px solid #8b4acb;background:#080817;color:white;width:100%;margin:8px 0}
+footer{text-align:center;color:#aaa;padding:25px;font-size:12px}
+@media(min-width:650px){.games{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
 <header>
- <div class="wrap nav">
-  <a href="#" class="brand" aria-label="GameVault home"><span class="brandMark">✦</span>GAME<span>VAULT</span></a>
-  <nav class="navlinks" aria-label="Main navigation"><a href="#library">Library</a><a href="#about">About</a><a href="#help">Help</a></nav>
-  <button class="btn primary" id="accountBtn">👤 Login / Register</button>
- </div>
+<h1>🎮 GameVault</h1>
+<p>PLAY INSTANTLY • NO LOGIN • NO DOWNLOAD</p>
 </header>
-<main class="wrap">
- <section class="hero">
-  <div>
-   <div class="eyebrow">✦ YOUR NEXT ADVENTURE STARTS HERE</div>
-   <h1>One hub.<br><span>Every kind of game.</span></h1>
-   <p>Explore PC legends, console favourites, mobile hits and indie gems. Search the library, pick a category, and open official game pages in seconds.</p>
-   <div class="heroActions"><a href="#library" class="btn primary">Explore games ↓</a><button class="btn" id="surpriseBtn">🎲 Surprise me</button></div>
-  </div>
-  <div class="heroArt" aria-label="GameVault gaming illustration"><div class="orb">🎮</div><strong>PLAY YOUR WAY</strong><small>PC · Console · Mobile · Indie</small></div>
- </section>
- <section class="stats" aria-label="Library statistics">
-  <div class="stat"><strong id="totalCount">56+</strong><span>GAMES TO DISCOVER</span></div>
-  <div class="stat"><strong>8</strong><span>GENRE CATEGORIES</span></div>
-  <div class="stat"><strong>Free</strong><span>TO EXPLORE THE HUB</span></div>
- </section>
- <section id="library">
-  <div class="sectionHead"><div><h2>Explore the library</h2><p>Find your next favourite game.</p></div><span id="resultCount" class="eyebrow">56 GAMES</span></div>
-  <div class="toolbar">
-   <input class="field" id="search" type="search" placeholder="🔎 Search games..." aria-label="Search games">
-   <select class="field" id="platform" aria-label="Filter by platform"><option value="all">All platforms</option><option>PC</option><option>Console</option><option>Mobile</option><option>Browser</option><option>Multi-platform</option></select>
-   <select class="field" id="sort" aria-label="Sort games"><option value="featured">Featured</option><option value="az">Name A–Z</option></select>
-  </div>
-  <div class="chips" id="categories" aria-label="Game categories">
-   <button class="chip active" data-category="All">All games</button>
-   <button class="chip" data-category="Sandbox">Sandbox</button><button class="chip" data-category="Action">Action</button><button class="chip" data-category="Battle Royale">Battle Royale</button><button class="chip" data-category="Racing">Racing</button><button class="chip" data-category="RPG">RPG</button><button class="chip" data-category="Sports">Sports</button><button class="chip" data-category="Horror">Horror</button><button class="chip" data-category="Strategy">Strategy</button><button class="chip" data-category="Indie">Indie</button>
-  </div>
-  <div class="grid" id="gameGrid" aria-live="polite"></div>
- </section>
- <section id="about" class="notice"><strong>About GameVault</strong><br>This is a game discovery library, not a game emulator or game-download mirror. Game pages open official publisher/store websites where available. Availability, price and supported platforms can vary by region.</section>
- <section id="help" class="notice"><strong>Login setup</strong><br>Firebase Authentication can add secure email/password accounts. For safety, login is disabled until you add your own Firebase web configuration and enable Email/Password in Firebase Console. Never put Firebase Admin keys or private service credentials in this file.</section>
-</main>
-<footer><div class="wrap footerInner"><span>© <span id="year"></span> GameVault. Fan-made discovery hub; not affiliated with game publishers.</span><div class="footerLinks"><a href="#library">Library</a><a href="#about">About</a><a href="#help">Login setup</a></div></div></footer>
+<main>
+<section class="hero">
+<h2>Ready to Play? 🔥</h2>
+<p>Choose a game and start playing!</p>
+<button onclick="start('Click Game')">▶ PLAY NOW</button>
+</section>
 
-<dialog id="gameDialog" aria-labelledby="gameDialogTitle">
- <div class="modalHead"><h2 id="gameDialogTitle">Game details</h2><button class="btn close" data-close="gameDialog" aria-label="Close">✕</button></div>
- <div class="modalContent" id="gameDialogContent"></div>
-</dialog>
-<dialog id="accountDialog" aria-labelledby="accountTitle">
- <div class="modalHead"><h2 id="accountTitle">Your GameVault account</h2><button class="btn close" data-close="accountDialog" aria-label="Close">✕</button></div>
- <div class="modalContent">
-  <div class="authTabs"><button class="btn primary" id="loginTab">Login</button><button class="btn" id="registerTab">Register</button></div>
-  <p id="authIntro">Sign in to your GameVault account.</p>
-  <form class="authForm" id="authForm">
-   <label id="nameLabel" class="hidden">Display name<input class="field" id="displayName" autocomplete="nickname" maxlength="50" placeholder="Your name"></label>
-   <label>Email address<input class="field" id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"></label>
-   <label>Password<input class="field" id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters"></label>
-   <button class="btn primary" id="authSubmit" type="submit">Login</button>
-  </form>
-  <p class="status" id="authStatus" role="status"></p>
-  <button class="btn hidden" id="resetPassword" type="button">Send password reset email</button>
-  <button class="btn hidden" id="signOut" type="button">Sign out</button>
-  <p style="font-size:12px">Authentication works only after you configure Firebase below. This page never saves passwords to local storage.</p>
- </div>
-</dialog>
-<script type="module">
-/* GameVault data: titles, genres, platforms and official destinations. */
-const games = [
-["Minecraft: Java Edition","Sandbox","PC","⛏️","Build, explore and customise your blocky world.","https://www.minecraft.net/"],
-["Minecraft: Bedrock Edition","Sandbox","Multi-platform","🧱","Play Minecraft across supported devices and editions.","https://www.minecraft.net/"],
-["Grand Theft Auto V","Action","PC","🚘","Open-world action adventure from Rockstar Games.","https://www.rockstargames.com/gta-v"],
-["Grand Theft Auto Online","Action","Multi-platform","🌆","Explore Los Santos online with friends.","https://www.rockstargames.com/gta-online"],
-["Fortnite","Battle Royale","Multi-platform","🪂","Battle royale, creative islands and changing events.","https://www.fortnite.com/"],
-["PUBG: Battlegrounds","Battle Royale","PC","🎯","Tactical battle royale survival.","https://pubg.com/"],
-["PUBG Mobile","Battle Royale","Mobile","📱","Mobile battle royale action.","https://www.pubgmobile.com/"],
-["Free Fire","Battle Royale","Mobile","🔥","Fast-paced mobile survival matches.","https://ff.garena.com/"],
-["Call of Duty: Warzone","Battle Royale","Multi-platform","💥","Large-scale free-to-play combat.","https://www.callofduty.com/"],
-["Call of Duty: Mobile","Action","Mobile","🎖️","Mobile multiplayer shooter and battle royale.","https://www.callofduty.com/mobile"],
-["Valorant","Action","PC","🎯","Tactical 5v5 hero-based shooter.","https://playvalorant.com/"],
-["Counter-Strike 2","Action","PC","🔫","Competitive tactical team shooter.","https://www.counter-strike.net/cs2"],
-["Apex Legends","Battle Royale","Multi-platform","🛡️","Squad-based hero battle royale.","https://www.ea.com/games/apex-legends"],
-["Overwatch 2","Action","Multi-platform","🤖","Team-based hero action.","https://overwatch.blizzard.com/"],
-["League of Legends","Strategy","PC","⚔️","Competitive multiplayer online battle arena.","https://www.leagueoflegends.com/"],
-["Dota 2","Strategy","PC","🧙","Deep strategic team battles.","https://www.dota2.com/"],
-["Roblox","Sandbox","Multi-platform","🟥","Discover and create experiences across genres.","https://www.roblox.com/"],
-["Terraria","Sandbox","Multi-platform","🌳","2D crafting, exploration and adventure.","https://terraria.org/"],
-["Stardew Valley","RPG","Multi-platform","🌻","Build a farm and get to know the valley.","https://www.stardewvalley.net/"],
-["Among Us","Indie","Multi-platform","🛸","Social deduction with crewmates and impostors.","https://www.innersloth.com/games/among-us/"],
-["Fall Guys","Indie","Multi-platform","🫘","Colourful obstacle-course party competition.","https://www.fallguys.com/"],
-["Rocket League","Sports","Multi-platform","🚗","Football meets rocket-powered cars.","https://www.rocketleague.com/"],
-["EA SPORTS FC","Sports","Multi-platform","⚽","Football simulation and team building.","https://www.ea.com/games/ea-sports-fc"],
-["eFootball","Sports","Multi-platform","🥅","Digital football matches and team play.","https://www.konami.com/efootball/"],
-["NBA 2K","Sports","Multi-platform","🏀","Basketball simulation and career modes.","https://nba.2k.com/"],
-["Forza Horizon 5","Racing","PC","🏎️","Open-world festival racing.","https://forza.net/"],
-["Forza Motorsport","Racing","Multi-platform","🏁","Track-focused motorsport racing.","https://forza.net/"],
-["Need for Speed Unbound","Racing","Multi-platform","🚘","Street racing with a bold visual style.","https://www.ea.com/games/need-for-speed"],
-["The Crew Motorfest","Racing","Multi-platform","🌴","Explore a festival of cars and racing.","https://www.ubisoft.com/"],
-["Gran Turismo 7","Racing","Console","🏆","Realistic driving and car collecting.","https://www.gran-turismo.com/"],
-["Elden Ring","RPG","Multi-platform","🐉","Fantasy action RPG with a vast world.","https://en.bandainamcoent.eu/elden-ring/elden-ring"],
-["The Witcher 3: Wild Hunt","RPG","Multi-platform","🐺","Story-rich fantasy role-playing adventure.","https://www.thewitcher.com/"],
-["Cyberpunk 2077","RPG","PC","🌃","Explore a futuristic open-world RPG.","https://www.cyberpunk.net/"],
-["Genshin Impact","RPG","Multi-platform","✨","Explore a colourful open-world action RPG.","https://genshin.hoyoverse.com/"],
-["Honkai: Star Rail","RPG","Multi-platform","🚄","Turn-based sci-fi fantasy adventure.","https://hsr.hoyoverse.com/"],
-["Honkai Impact 3rd","Action","Multi-platform","⚡","Stylish action combat and story chapters.","https://honkaiimpact3.hoyoverse.com/"],
-["Wuthering Waves","RPG","Multi-platform","🌊","Open-world action RPG exploration.","https://wutheringwaves.kurogames.com/"],
-["The Legend of Zelda: Tears of the Kingdom","Adventure","Console","🗡️","Explore, solve puzzles and build in Hyrule.","https://www.nintendo.com/"],
-["Super Mario Bros. Wonder","Adventure","Console","🍄","Colourful side-scrolling platform adventure.","https://www.nintendo.com/"],
-["Pokémon GO","Adventure","Mobile","⚡","Explore your surroundings and discover Pokémon.","https://pokemongolive.com/"],
-["Clash of Clans","Strategy","Mobile","🏰","Build a village and plan clan battles.","https://supercell.com/en/games/clashofclans/"],
-["Clash Royale","Strategy","Mobile","👑","Real-time strategy and card battles.","https://supercell.com/en/games/clashroyale/"],
-["Brawl Stars","Action","Mobile","⭐","Quick multiplayer arena battles.","https://supercell.com/en/games/brawlstars/"],
-["Call of Duty: Black Ops 6","Action","Multi-platform","🪖","First-person action from the Call of Duty series.","https://www.callofduty.com/"],
-["Resident Evil 4","Horror","Multi-platform","🧟","Survival horror with intense encounters.","https://www.residentevil.com/"],
-["Silent Hill 2","Horror","Multi-platform","🌫️","Psychological survival horror adventure.","https://www.konami.com/"],
-["Phasmophobia","Horror","PC","👻","Cooperative paranormal investigation.","https://www.kineticgames.co.uk/"],
-["Dead by Daylight","Horror","Multi-platform","🪝","Asymmetric multiplayer horror.","https://deadbydaylight.com/"],
-["Five Nights at Freddy's","Horror","Multi-platform","🐻","Survive a night of animatronic scares.","https://store.steampowered.com/"],
-["Hollow Knight","Indie","Multi-platform","🪲","Atmospheric hand-drawn action adventure.","https://www.hollowknight.com/"],
-["Celeste","Indie","Multi-platform","🏔️","Precision platforming and a heartfelt journey.","https://www.celestegame.com/"],
-["Hades","RPG","Multi-platform","🔥","Fast action roguelike from the underworld.","https://www.supergiantgames.com/games/hades/"],
-["Dead Cells","Action","Multi-platform","🗡️","Fast-moving roguelite action platformer.","https://dead-cells.com/"],
-["Cuphead","I
+<div class="ad">ADVERTISEMENT<br>Ad space — ads can be added here later.</div>
+
+<h2>🎯 All Games</h2>
+<div class="games">
+<div class="card"><div class="emoji">⚡</div><h3>Click Challenge</h3><p>Click as fast as possible.</p><button onclick="start('Click Game')">PLAY</button></div>
+<div class="card"><div class="emoji">✊</div><h3>Rock Paper Scissors</h3><p>Beat the computer.</p><button onclick="start('RPS')">PLAY</button></div>
+<div class="card"><div class="emoji">🔢</div><h3>Number Guess</h3><p>Guess the secret number.</p><button onclick="start('Guess')">PLAY</button></div>
+<div class="card"><div class="emoji">❎</div><h3>Tic Tac Toe</h3><p>Play X and O.</p><button onclick="start('TicTacToe')">PLAY</button></div>
+</div>
+
+<section id="play">
+<button onclick="closeGame()" style="float:right">✕ CLOSE</button>
+<h2 id="title">Game</h2>
+<div id="area"></div>
+<p id="result"></p>
+</section>
+
+<div class="ad">ADVERTISEMENT<br>Optional second banner space.</div>
+</main>
+<footer>GameVault © 2026 • Play • Explore • Enjoy</footer>
+
+<script>
+let timer=null,score=0,secret=0,board=[],turn='X';
+
+function start(game){
+clearInterval(timer);
+document.getElementById('play').style.display='block';
+document.getElementById('title').textContent=game==='RPS'?'Rock Paper Scissors':game==='Guess'?'Number Guess':game==='TicTacToe'?'Tic Tac Toe':'Click Challenge';
+document.getElementById('area').innerHTML='';
+document.getElementById('result').textContent='';
+let a=document.getElementById('area');
+
+if(game==='Click Game'){
+score=0;let time=10;
+a.innerHTML='<h3 id="stats">Score: 0 | Time: 10</h3><button id="tap" style="font-size:25px;padding:25px">TAP!</button>';
+let started=false;
+document.getElementById('tap').onclick=()=>{
+if(!started){started=true;timer=setInterval(()=>{time--;document.getElementById('stats').textContent='Score: '+score+' | Time: '+time;if(time<=0){clearInterval(timer);document.getElementById('tap').disabled=true;document.getElementById('result').textContent='Time up! Score: '+score}},1000)}
+if(time>0){score++;document.getElementById('stats').textContent='Score: '+score+' | Time: '+time}
+};
+}
+
+if(game==='RPS'){
+a.innerHTML='<p>Choose your move:</p><button onclick="rps(0)">✊ Rock</button><button onclick="rps(1)">✋ Paper</button><button onclick="rps(2)">✌️ Scissors</button>';
+}
+
+if(game==='Guess'){
+secret=Math.floor(Math.random()*50)+1;
+a.innerHTML='<p>Guess a number from 1 to 50</p><input id="guess" type="number" min="1" max="50" placeholder="Enter number"><button onclick="checkGuess()">GUESS</button><button onclick="start(\\'Guess\\')">NEW NUMBER</button>';
+}
+
+if(game==='TicTacToe'){
+board=Array(9).fill('');turn='X';
+a.innerHTML='<div style="display:grid;grid-template-columns:repeat(3,75px);gap:5px;justify-content:center">'+board.map((v,i)=>'<button style="height:70px;font-size:24px" onclick="moveTTT('+i+')" id="cell'+i+'"></button>').join('')+'</div><p>Two players on one device</p>';
+document.getElementById('result').textContent='X goes first';
+}
+document.getElementById('play').scrollIntoView({behavior:'smooth'});
+}
+
+function rps(p){
+let c=Math.floor(Math.random()*3),names=['Rock','Paper','Scissors'];
+let result=p===c?'Draw!':(p===0&&c===2)||(p===1&&c===0)||(p===2&&c===1)?'You win!':'Computer wins!';
+document.getElementById('result').textContent='You: '+names[p]+' | Computer: '+names[c]+' — '+result;
+}
+function checkGuess(){
+let n=Number(document.getElementById('guess').value);
+if(!n||n<1||n>50){document.getElementById('result').textContent='Enter a number from 1 to 50.';return}
+document.getElementById('result').textContent=n===secret?'🎉 Correct! You win!':n<secret?'Too low! Try higher.':'Too high! Try lower.';
+}
+function moveTTT(i){
+if(board[i]||winner())return;
+board[i]=turn;document.getElementById('cell'+i).textContent=turn;
+if(winner()){document.getElementById('result').textContent=turn+' wins! 🎉';return}
+if(board.every(Boolean)){document.getElementById('result').textContent='Draw!';return}
+turn=turn==='X'?'O':'X';document.getElementById('result').textContent=turn+' goes next';
+}
+function winner(){
+return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(x=>board[x[0]]&&board[x[0]]===board[x[1]]&&board[x[1]]===board[x[2]]);
+}
+function closeGame(){clearInterval(timer);document.getElementById('play').style.display='none'}
+</script>
+</body>
+</html>
