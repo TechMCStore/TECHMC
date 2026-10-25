@@ -1,292 +1,212 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Neon Arcade — Game Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GameZone</title>
 <style>
-:root{--bg:#070b16;--panel:#111a2d;--line:#293653;--text:#f4f6ff;--muted:#9ba9c5;--purple:#8055f6;--cyan:#26d9f2;--green:#29df9a;--red:#ff5477}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,sans-serif}
-button,input,select{font:inherit}
-button{cursor:pointer;border:0;border-radius:10px;padding:12px 15px;font-weight:700;color:white;background:var(--purple)}
-button:disabled{opacity:.45;cursor:not-allowed}
-input,select{background:#0a1121;border:1px solid #34415f;color:white;padding:12px;border-radius:9px;width:100%;margin:6px 0 12px}
-header{position:sticky;top:0;z-index:4;background:#0a1020f5;border-bottom:1px solid var(--line);padding:13px 4%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.logo{font-weight:1000;font-size:23px;letter-spacing:-1px;color:var(--cyan)}
-.header-right{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.wallet{background:#17233b;padding:11px 14px;border-radius:10px;font-weight:bold}
-main{max-width:1200px;margin:auto;padding:22px 4% 50px}
-.notice{background:#211633;border:1px solid #68469e;border-radius:10px;padding:12px;font-size:12px;line-height:1.6;color:#e4d5ff}
-.hero{padding:27px 0}
-.hero h1{font-size:clamp(34px,7vw,60px);line-height:1.02;letter-spacing:-2px;margin:15px 0}
-.hero h1 span{color:var(--cyan)}
-.muted{color:var(--muted);line-height:1.65}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
-.stat,.panel,.game-card{background:linear-gradient(145deg,#141f35,#0e1526);border:1px solid var(--line);border-radius:14px;padding:15px}
-.stat small{color:var(--muted)}.stat strong{display:block;font-size:23px;margin-top:8px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
-.toolbar input{flex:1;min-width:160px}
-.filters{display:flex;gap:8px;overflow:auto;padding:5px 0 15px}
-.filters button{white-space:nowrap;background:#1a2640}
-.filters button.active{background:var(--purple)}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.game-card{padding:15px;transition:.18s;min-width:0}
-.game-card:hover{border-color:var(--purple);transform:translateY(-2px)}
-.game-icon{font-size:37px;margin-bottom:12px}
-.game-card h3{font-size:15px;margin:0 0 8px;min-height:34px}
-.game-card p{font-size:12px;color:var(--muted);min-height:32px;line-height:1.5}
-.game-card button{width:100%}
-.primary{background:linear-gradient(110deg,#8055f6,#4268ff)}
-.secondary{background:#202d48;border:1px solid #354766}
-.green{background:#0e9e71}.red{background:#a92b4c}
-.overlay{position:fixed;inset:0;z-index:10;background:#02040dee;display:flex;align-items:center;justify-content:center;padding:15px;overflow:auto}
-.modal{width:100%;max-width:430px;max-height:94vh;overflow:auto;background:#111a2d;border:1px solid #3a4968;border-radius:18px;padding:22px}
-.hidden{display:none!important}
-.tabs{display:flex;gap:8px;margin:16px 0}.tabs button{flex:1}
-.error{color:#ff9bad;font-size:13px}
-#gameScreen{position:fixed;inset:0;z-index:8;background:#070b16;overflow:auto}
-.game-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4%;background:#0b1121;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.game-main{max-width:1000px;margin:auto;padding:18px 4% 40px}
-.game-title{display:flex;align-items:center;gap:12px;margin-bottom:17px}
-.game-title .icon{font-size:43px}
-.game-title h2{margin:0 0 5px}
-.arena{position:relative;overflow:hidden;min-height:300px;border:1px solid #293b5c;border-radius:18px;background:radial-gradient(ellipse at 50% 100%,#1d3560,#10172b 60%,#0a1020);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px}
-.arena:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(#ffffff09 1px,transparent 1px),linear-gradient(90deg,#ffffff09 1px,transparent 1px);background-size:35px 35px}
-.arena>*{position:relative}
-.big-number{font-size:clamp(43px,10vw,76px);font-weight:900;letter-spacing:-3px}
-.cyan{color:var(--cyan)}.green-text{color:var(--green)}.red-text{color:var(--red)}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.control-panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px}
-.control-panel button{width:100%;margin-top:5px}
-.betrow{display:flex;gap:8px;align-items:center}
-.betrow button{width:auto;white-space:nowrap}
-#stake{margin:8px 0}
-.result{background:#091020;border:1px solid #293653;padding:14px;border-radius:12px;margin-top:12px;line-height:1.7;min-height:54px}
-.plane{font-size:76px;display:inline-block}
-.flight-line{height:5px;background:linear-gradient(90deg,var(--cyan),var(--purple));width:0;border-radius:9px;margin-top:15px}
-.wheel{width:min(68vw,250px);height:min(68vw,250px);border-radius:50%;border:8px solid #e6e9ff;background:conic-gradient(#e74b68 0 45deg,#192b4d 45deg 90deg,#7e52ef 90deg 135deg,#20c7d9 135deg 180deg,#e74b68 180deg 225deg,#192b4d 225deg 270deg,#7e52ef 270deg 315deg,#20c7d9 315deg);display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px #8055f655}
-.wheel-center{background:#0c1426;border:5px solid white;border-radius:50%;padding:25px;font-size:27px}
-.wheel.spin{animation:spin .8s ease-out}
-@keyframes spin{to{transform:rotate(1080deg)}}
-.slots{display:flex;gap:8px;justify-content:center;margin:15px 0}
-.reel{width:85px;height:85px;border-radius:12px;background:#f0f4ff;color:#10172a;font-size:44px;display:grid;place-items:center;box-shadow:inset 0 -6px #bbc4d7}
-.cards{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}
-.playing-card{background:#f6f6ff;color:#15203a;border-radius:12px;width:85px;height:120px;display:flex;align-items:center;justify-content:center;font-size:37px;font-weight:bold;box-shadow:0 6px 0 #aab1c2}
-.dice{font-size:75px;animation:pop .35s}
-@keyframes pop{50%{transform:rotate(18deg) scale(1.15)}}
-.track{width:100%;max-width:450px;height:150px;background:repeating-linear-gradient(0deg,#29344b 0 22px,#35425b 22px 44px);border-left:5px dashed white;border-right:5px dashed white;border-radius:8px;position:relative;margin:15px auto}
-.car{font-size:37px;position:absolute;left:8px;top:45%;transition:left .6s}
-.generic-options{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:18px 0}
-.generic-options button{min-width:70px;background:#1c3151;border:1px solid #426085}
-footer{text-align:center;padding:25px;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}
-@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:560px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:1fr}.controls{grid-template-columns:1fr}.arena{min-height:275px}.game-card{padding:11px}.game-card h3{font-size:14px}}
+body{margin:0;background:#0a1020;color:white;font-family:Arial,sans-serif}
+header{padding:18px;background:#111a30;display:flex;
+justify-content:space-between;align-items:center}
+h1{color:#69f0ae;margin:0;font-size:25px}
+main{max-width:900px;margin:30px auto;padding:16px}
+.card{background:#141f36;padding:24px;border-radius:16px;
+margin-bottom:20px;border:1px solid #293957}
+input,button{width:100%;padding:13px;margin:7px 0;
+border-radius:9px;border:1px solid #34435e;font-size:16px}
+input{background:#0b1426;color:white}
+button{background:#69f0ae;color:#07140e;border:0;
+font-weight:bold;cursor:pointer}
+button:hover{filter:brightness(.9)}
+.secondary{background:#293957;color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.hidden{display:none}
+.muted{color:#afbdd4;line-height:1.6}
+#message{color:#ffd180;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
-
 <header>
- <div class="logo">NEON ARCADE ✦</div>
- <div class="header-right">
-  <div class="wallet" id="wallet">🪙 Demo: $0</div>
-  <button id="accountButton" class="secondary" onclick="openAuth()">Login / Register</button>
-  <button id="logoutButton" class="secondary hidden" onclick="logout()">Logout</button>
- </div>
+  <h1>🎮 GameZone</h1>
+  <button id="logout" class="secondary hidden"
+          style="width:auto">Logout</button>
 </header>
 
 <main>
- <div class="notice">🎮 DEMO ONLY — All games use virtual coins. No real-money deposits, withdrawals or cash prizes. These results have no cash value.</div>
- <section class="hero">
-  <h1>ENTER THE<br><span>NEON ARCADE</span></h1>
-  <p class="muted">50 mini-games • Unique game screens • Smooth animations • Mobile friendly</p>
-  <button class="primary" onclick="openAuth()">Start Playing →</button>
- </section>
- <div class="stats">
-  <div class="stat"><small>GAME COLLECTION</small><strong>50 Games 🎮</strong></div>
-  <div class="stat"><small>NEW ACCOUNT BONUS</small><strong>$500 Virtual</strong></div>
-  <div class="stat"><small>REAL MONEY VALUE</small><strong>$0.00</strong></div>
- </div>
- <h2>Choose Your Game</h2>
- <div class="toolbar">
-  <input id="search" placeholder="🔎 Search games..." oninput="renderGames()">
-  <select id="sort" style="width:auto" onchange="renderGames()"><option value="default">Default order</option><option value="az">Name A–Z</option></select>
- </div>
- <div id="filters" class="filters"></div>
- <div id="games" class="grid"></div>
-</main>
-<footer>NEON ARCADE · Virtual entertainment demo · No real-money gambling.</footer>
+<section id="auth" class="card">
+  <h2 id="formTitle">Create account</h2>
+  <p class="muted">Join GameZone and play free mini-games.</p>
 
-<div class="overlay" id="authOverlay">
- <div class="modal">
-  <div class="logo">NEON ARCADE</div>
-  <h2 id="authTitle">Create your account</h2>
-  <p class="muted">Register for a one-time $500 virtual demo balance.</p>
-  <div class="tabs">
-   <button class="primary" onclick="setMode('register')">Register</button>
-   <button class="secondary" onclick="setMode('login')">Login</button>
-  </div>
   <form id="authForm">
-   <label>Username</label><input id="username" required minlength="3" maxlength="24" autocomplete="username" placeholder="Choose a username">
-   <label>Password</label><input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="Demo password, 6+ characters">
-   <div id="authError" class="error"></div>
-   <button class="primary" id="authSubmit" style="width:100%">Register & Get $500</button>
+    <input id="username" placeholder="Username"
+           minlength="3" maxlength="24" required>
+    <input id="email" type="email" placeholder="Email address" required>
+    <input id="password" type="password"
+           placeholder="Password (minimum 8 characters)"
+           minlength="8" required>
+    <button id="submitButton" type="submit">Register</button>
   </form>
-  <p class="muted">Local demo only. Do not use your real password. This is not secure authentication.</p>
-  <button class="secondary" onclick="closeAuth()" style="width:100%">Close</button>
- </div>
-</div>
 
-<div id="gameScreen" class="hidden">
- <div class="game-header">
-  <button class="secondary" onclick="exitGame()">← Arcade</button>
-  <div class="logo">NEON ARCADE</div>
-  <div class="wallet" id="gameWallet">🪙 $500</div>
- </div>
- <div class="game-main">
-  <div class="game-title"><div id="gIcon" class="icon">✈️</div><div><h2 id="gTitle">Aviator Flight</h2><div class="muted">DEMO MODE · VIRTUAL COINS ONLY</div></div></div>
-  <div class="arena" id="arena"></div>
-  <div class="controls">
-   <div class="control-panel">
-    <label for="stake">Virtual coins per round</label>
-    <div class="betrow"><button class="secondary" onclick="adjustStake(-5)">−5</button><input id="stake" type="number" min="1" max="50" value="10"><button class="secondary" onclick="adjustStake(5)">+5</button></div>
-    <div class="muted">1–50 coins per round</div>
-   </div>
-   <div class="control-panel">
-    <div class="muted">ROUND CONTROLS</div>
-    <button class="primary" id="actionButton" onclick="playGame()">Play Demo Round</button>
-    <div class="muted" style="font-size:12px;margin-top:9px">No cash value. No deposits or withdrawals.</div>
-   </div>
+  <button id="switchMode" class="secondary" type="button">
+    Already registered? Login
+  </button>
+  <p id="message" role="status"></p>
+</section>
+
+<section id="dashboard" class="hidden">
+  <div class="card">
+    <h2>Welcome, <span id="welcome"></span>!</h2>
+    <p class="muted">Your free gaming dashboard is ready.</p>
+    <h3>⭐ Virtual points: <span id="points">0</span></h3>
   </div>
-  <div id="gameResult" class="result">Welcome! Start a demo round.</div>
- </div>
-</div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🎯 Number Challenge</h3>
+      <p class="muted">Guess a number from 1 to 5.</p>
+      <input id="guess" type="number" min="1" max="5"
+             placeholder="Your guess">
+      <button id="guessButton">Play</button>
+      <p id="guessResult" class="muted"></p>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Quick Quiz</h3>
+      <p>Which game is famous for blocks?</p>
+      <button class="quiz" data-answer="no">Free Fire</button>
+      <button class="quiz" data-answer="yes">Minecraft</button>
+      <p id="quizResult" class="muted"></p>
+    </div>
+  </div>
+</section>
+</main>
 
 <script>
-const STORE="neon_arcade_accounts_v3";
-const SESSION="neon_arcade_session_v3";
+"use strict";
 
-const data=[
-["Aviator Flight","✈️","Flight"],["Lucky Wheel","🎡","Wheel"],["Dice Roll","🎲","Dice"],["Hi-Lo Cards","🃏","Cards"],["Coin Flip","🪙","Classic"],
-["Color Pick","🌈","Color"],["Number Guess","🔢","Numbers"],["Lucky Stars","⭐","Wheel"],["Fruit Slots","🍒","Slots"],["Gem Spin","💎","Slots"],
-["Treasure Chest","🧰","Classic"],["Rocket Dash","🚀","Flight"],["Moon Mission","🌙","Flight"],["Meteor Run","☄️","Flight"],["Card Draw","🂡","Cards"],
-["Blackjack Lite","♠️","Cards"],["Red or Black","🔴","Color"],["Odd or Even","➗","Numbers"],["High Number","📈","Numbers"],["Low Number","📉","Numbers"],
-["Dice Duel","🎲","Dice"],["Double Dice","🎲","Dice"],["Triple Dice","🎲","Dice"],["Lucky Seven","7️⃣","Numbers"],["Magic Eight","🎱","Classic"],
-["Crystal Ball","🔮","Classic"],["Golden Key","🗝️","Classic"],["Mystery Box","🎁","Classic"],["Treasure Hunt","🗺️","Classic"],["Pirate Gold","🏴‍☠️","Classic"],
-["Candy Slots","🍬","Slots"],["Lemon Spin","🍋","Slots"],["Cherry Spin","🍒","Slots"],["Diamond Drop","💠","Slots"],["Rainbow Reel","🌈","Slots"],
-["Ocean Spin","🌊","Slots"],["Fire Spin","🔥","Slots"],["Ice Spin","🧊","Slots"],["Jungle Quest","🌴","Classic"],["Dragon's Den","🐉","Classic"],
-["Phoenix Flight","🦅","Flight"],["Turbo Race","🏎️","Racing"],["Drift Challenge","🏁","Racing"],["Bike Sprint","🏍️","Racing"],["Space Race","🛸","Racing"],
-["Rocket Car","🚗","Racing"],["Goal Challenge","⚽","Sports"],["Basket Shot","🏀","Sports"],["Target Hit","🎯","Sports"],["Memory Match","🧠","Puzzle"]
-];
+const $ = id => document.getElementById(id);
+let mode = "register";
+let currentUser = null;
+let points = 0;
 
-let mode="register",user=null,selected=-1,category="All",round=0,flightTimer=null,flightMultiplier=1,flightActive=false;
+function showMessage(text) {
+  $("message").textContent = text;
+}
 
-function getAccounts(){try{return JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){return {}}}
-function saveAccounts(a){localStorage.setItem(STORE,JSON.stringify(a))}
-function userKey(n){return n.trim().toLowerCase()}
-function setMode(m){
- mode=m;
- document.getElementById("authTitle").textContent=m==="register"?"Create your account":"Welcome back";
- document.getElementById("authSubmit").textContent=m==="register"?"Register & Get $500":"Login";
- document.getElementById("authError").textContent="";
+function showAuth() {
+  $("auth").classList.remove("hidden");
+  $("dashboard").classList.add("hidden");
+  $("logout").classList.add("hidden");
 }
-function openAuth(){document.getElementById("authOverlay").classList.remove("hidden")}
-function closeAuth(){if(user)document.getElementById("authOverlay").classList.add("hidden")}
-function updateWallet(){
- let v=user?Number(user.balance).toFixed(2):"0.00";
- document.getElementById("wallet").textContent="🪙 Demo: $"+v;
- document.getElementById("gameWallet").textContent="🪙 $"+v;
- document.getElementById("accountButton").textContent=user?user.username:"Login / Register";
- document.getElementById("logoutButton").classList.toggle("hidden",!user);
+
+function showDashboard() {
+  $("auth").classList.add("hidden");
+  $("dashboard").classList.remove("hidden");
+  $("logout").classList.remove("hidden");
+  $("welcome").textContent = currentUser.username;
+  $("points").textContent = points;
 }
-function persist(){
- if(!user)return;
- let a=getAccounts(),k=userKey(user.username);
- if(a[k]){a[k].balance=user.balance;saveAccounts(a)}
- updateWallet();
+
+function setMode(nextMode) {
+  mode = nextMode;
+  $("formTitle").textContent =
+    mode === "register" ? "Create account" : "Login";
+  $("submitButton").textContent =
+    mode === "register" ? "Register" : "Login";
+  $("switchMode").textContent =
+    mode === "register"
+      ? "Already registered? Login"
+      : "New here? Create account";
+  $("username").classList.toggle("hidden", mode === "login");
+  $("username").required = mode === "register";
+  $("password").value = "";
+  showMessage("");
 }
-document.getElementById("authForm").addEventListener("submit",e=>{
- e.preventDefault();
- let name=document.getElementById("username").value.trim(),pass=document.getElementById("password").value;
- let error=document.getElementById("authError");
- if(name.length<3||pass.length<6){error.textContent="Username needs 3+ characters and password needs 6+.";return}
- let a=getAccounts(),k=userKey(name);
- if(mode==="register"){
-  if(a[k]){error.textContent="Username exists. Please log in.";return}
-  // Insecure local demo authentication only. Never use for real accounts.
-  a[k]={username:name,password:pass,balance:500,bonusClaimed:true};
-  saveAccounts(a);
- }else{
-  if(!a[k]||a[k].password!==pass){error.textContent="Incorrect username or password.";return}
- }
- user={username:a[k].username,balance:Number(a[k].balance)||0};
- sessionStorage.setItem(SESSION,k);
- document.getElementById("authOverlay").classList.add("hidden");
- updateWallet();renderGames();
+
+$("switchMode").addEventListener("click", () => {
+  setMode(mode === "register" ? "login" : "register");
 });
-function restore(){
- let k=sessionStorage.getItem(SESSION),a=getAccounts();
- if(k&&a[k])user={username:a[k].username,balance:Number(a[k].balance)||0};
- updateWallet();
-}
-function logout(){
- exitGame();user=null;sessionStorage.removeItem(SESSION);updateWallet();openAuth();
-}
-function renderGames(){
- const cats=["All",...new Set(data.map(g=>g[2]))];
- document.getElementById("filters").innerHTML=cats.map(c=>`<button class="${category===c?"active":""}" onclick="setCategory('${c}')">${c}</button>`).join("");
- let q=document.getElementById("search").value.toLowerCase();
- let list=data.map((g,i)=>({g,i})).filter(x=>(category==="All"||x.g[2]===category)&&x.g[0].toLowerCase().includes(q));
- if(document.getElementById("sort").value==="az")list.sort((a,b)=>a.g[0].localeCompare(b.g[0]));
- document.getElementById("games").innerHTML=list.map(x=>`<article class="game-card"><div class="game-icon">${x.g[1]}</div><h3>${x.i+1}. ${x.g[0]}</h3><p>${x.g[2]} · Interactive demo</p><button class="primary" onclick="openGame(${x.i})">Play Game →</button></article>`).join("")||"<p>No games found.</p>";
-}
-function setCategory(c){category=c;renderGames()}
-function adjustStake(n){
- let el=document.getElementById("stake");
- el.value=Math.min(50,Math.max(1,(Number(el.value)||10)+n));
-}
-function openGame(i){
- if(!user){openAuth();return}
- exitFlight();
- selected=i;round=0;
- document.getElementById("gameScreen").classList.remove("hidden");
- document.getElementById("gIcon").textContent=data[i][1];
- document.getElementById("gTitle").textContent=data[i][0];
- document.getElementById("gameResult").textContent="Ready to play! Your coins are virtual.";
- drawArena();
-}
-function exitFlight(){
- if(flightTimer){clearInterval(flightTimer);flightTimer=null}
- flightActive=false;
-}
-function exitGame(){exitFlight();document.getElementById("gameScreen").classList.add("hidden")}
-function drawArena(){
- const name=data[selected][0],type=data[selected][2],icon=data[selected][1],arena=document.getElementById("arena");
- document.getElementById("actionButton").disabled=false;
- document.getElementById("actionButton").textContent="Play Demo Round";
- if(name==="Aviator Flight"){
-  arena.innerHTML=`<div class="muted">FLIGHT SIMULATOR · DEMO</div><div class="plane" id="plane">✈️</div><div class="big-number cyan" id="multiplier">1.00×</div><div class="flight-line" id="flightLine"></div><p class="muted">Start a flight round to see the animation.</p>`;
-  document.getElementById("actionButton").textContent="Start Flight";
- }else if(type==="Wheel"){
-  arena.innerHTML=`<div class="muted">LUCKY WHEEL</div><div class="wheel" id="wheel"><div class="wheel-center">🎡</div></div><p>Spin the wheel for a virtual result.</p>`;
- }else if(type==="Slots"){
-  arena.innerHTML=`<div class="muted">NEON SLOT MACHINE</div><div class="slots"><div class="reel" id="r1">🍒</div><div class="reel" id="r2">🍋</div><div class="reel" id="r3">💎</div></div><p>Match symbols in this animated demo.</p>`;
- }else if(type==="Cards"){
-  arena.innerHTML=`<div class="muted">CARD TABLE</div><div class="cards"><div class="playing-card" id="card1">?</div><div class="playing-card" id="card2">?</div></div><p>Draw virtual cards and compare results.</p>`;
- }else if(type==="Dice"){
-  arena.innerHTML=`<div class="muted">DICE ARENA</div><div class="big-number dice" id="dice">🎲</div><p>Roll the dice in your demo round.</p>`;
- }else if(type==="Racing"){
-  arena.innerHTML=`<div class="muted">ARCADE RACING</div><div class="track"><div class="car" id="car">${icon}</div></div><div class="big-number" id="raceScore">READY</div><p>Start your animated race.</p>`;
- }else if(name==="Coin Flip"){
-  arena.innerHTML=`<div class="muted">COIN FLIP</div><div class="big-number" id="coin">🪙</div><div class="generic-options"><button onclick="choose('Heads')">Heads</button><button onclick="choose('Tails')">Tails</button></div><p>Choose a side before the round.</p>`;
- }else if(type==="Color"){
-  arena.innerHTML=`<div class="muted">COLOR CHALLENGE</div><div class="big-number" id="colorResult">🌈</div><div class="generic-options"><button onclick="choose('Red')">🔴 Red</button><button onclick="choose('Blue')">🔵 Blue</button><button onclick="choose('Green')">🟢 Green</button></div>`;
- }else if(type==="Numbers"){
-  arena.innerHTML=`<div class="muted">NUMBER CHALLENGE</div><div class="big-number cyan" id="numberResult">?</div><div class="generic-options">${[1,2,3,4,5,6].map(n=>`<button onclick="choose('${n}')">${n}</button>`).join("")}</div><p>Pick a number, then play a round.</p>`;
- }else if(type==="Sports"){
-  arena.innerHTML=`<div class="muted">SPORTS CHALLENGE</div><div class="big-number" id="sportIcon">${icon}</div><div class="generic-options"><button onclick="choose('Left')">← Left</button><button onclick="choose('Center')">Center</button><button onclick="choose('Right')">Right →</button></div>`;
- }else if(type==="Puzzle"){
-  arena.innerHTML=`<div class="muted">MEMORY MINI-GAME</div><div class="big-number" id="puzzleIcon">🧠</div><div class="generic-options"><button onclick="choose('Star')">⭐ Star</button><button onclick="choose('Moon')">🌙 Moon</button><button onclick="choose('Gem')">💎 Gem</button></div><p>Pick an icon and reveal the round result.</p>`;
- }else{
-  arena.innerHTML=`<div class
+
+$("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  showMessage("Processing...");
+
+  const email = $("email").value.trim().toLowerCase();
+  const password = $("password").value;
+  const username = $("username").value.trim();
+
+  try {
+    if (mode === "register") {
+      // Demo only: browser storage is NOT secure authentication.
+      const key = "gamezone_demo_users";
+      const users = JSON.parse(localStorage.getItem(key) || "{}");
+
+      if (users[email]) {
+        showMessage("Account already exists. Please login.");
+        return;
+      }
+
+      // Never use this demo for real accounts or real passwords.
+      // Passwords are deliberately NOT saved.
+      showMessage(
+        "This demo cannot safely register accounts. " +
+        "Connect Firebase Authentication to enable secure registration."
+      );
+    } else {
+      showMessage(
+        "Secure login is not configured yet. " +
+        "Connect Firebase Authentication first."
+      );
+    }
+  } catch (error) {
+    showMessage("Storage unavailable. Please try another browser.");
+  }
+});
+
+$("logout").addEventListener("click", () => {
+  currentUser = null;
+  points = 0;
+  showAuth();
+  setMode("login");
+});
+
+$("guessButton").addEventListener("click", () => {
+  const guess = Number($("guess").value);
+
+  if (!Number.isInteger(guess) || guess < 1 || guess > 5) {
+    $("guessResult").textContent = "Enter a number from 1 to 5.";
+    return;
+  }
+
+  const answer = Math.floor(Math.random() * 5) + 1;
+
+  if (guess === answer) {
+    points += 10;
+    $("guessResult").textContent =
+      "Correct! You earned 10 virtual points.";
+  } else {
+    $("guessResult").textContent =
+      "The number was " + answer + ". Try again!";
+  }
+
+  $("points").textContent = points;
+});
+
+document.querySelectorAll(".quiz").forEach(button => {
+  button.addEventListener("click", () => {
+    if (button.dataset.answer === "yes") {
+      points += 5;
+      $("quizResult").textContent = "Correct! +5 virtual points.";
+      $("points").textContent = points;
+    } else {
+      $("quizResult").textContent = "Try again!";
+    }
+  });
+});
+
+setMode("register");
+showAuth();
+</script>
+</body>
+</html>
